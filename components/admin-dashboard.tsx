@@ -11,13 +11,19 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Edit, Plus, Trash2, Eye, EyeOff, Upload, Image as ImageIcon, Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download, Award, Shield, Sparkles, Cpu, Database, Globe } from "lucide-react"
+import { Edit, Plus, Trash2, Eye, EyeOff, Upload, Image as ImageIcon, Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download, Award, Shield, Sparkles, Cpu, Database, Globe, ChevronUp, ChevronDown, Heading, Type } from "lucide-react"
+
+type ContentBlock =
+  | { id: string; type: "heading"; text: string }
+  | { id: string; type: "paragraph"; text: string }
+  | { id: string; type: "image"; url: string; caption: string }
 
 interface BlogPost {
   id: string
   title: string
   excerpt: string
   content: string
+  blocks?: ContentBlock[]
   date: string
   readTime: string
   tags: string[]
@@ -84,9 +90,11 @@ export default function AdminDashboard() {
     excerpt: "",
     content: "",
     tags: "",
-    image: ""
+    image: "",
+    blocks: [] as ContentBlock[]
   })
   const [selectedBlogImage, setSelectedBlogImage] = useState<File | null>(null)
+  const [uploadingBlockId, setUploadingBlockId] = useState<string | null>(null)
   const blogImageInputRef = useRef<HTMLInputElement>(null)
 
   // Project management state
@@ -199,12 +207,75 @@ export default function AdminDashboard() {
     window.dispatchEvent(new Event('certificatesUpdated'))
   }
 
+  // Content block helpers (section headings + inline images)
+  const newBlockId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
+
+  const addBlock = (type: ContentBlock["type"]) => {
+    const block: ContentBlock =
+      type === "image"
+        ? { id: newBlockId(), type: "image", url: "", caption: "" }
+        : { id: newBlockId(), type, text: "" }
+    setBlogFormData((d) => ({ ...d, blocks: [...d.blocks, block] }))
+  }
+
+  const updateBlock = (id: string, patch: Partial<ContentBlock>) => {
+    setBlogFormData((d) => ({
+      ...d,
+      blocks: d.blocks.map((b) => (b.id === id ? ({ ...b, ...patch } as ContentBlock) : b))
+    }))
+  }
+
+  const removeBlock = (id: string) => {
+    setBlogFormData((d) => ({ ...d, blocks: d.blocks.filter((b) => b.id !== id) }))
+  }
+
+  const moveBlock = (id: string, dir: -1 | 1) => {
+    setBlogFormData((d) => {
+      const i = d.blocks.findIndex((b) => b.id === id)
+      const j = i + dir
+      if (i < 0 || j < 0 || j >= d.blocks.length) return d
+      const blocks = [...d.blocks]
+      ;[blocks[i], blocks[j]] = [blocks[j], blocks[i]]
+      return { ...d, blocks }
+    })
+  }
+
+  const handleBlockImageUpload = async (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const maxSize = 10 * 1024 * 1024
+    if (file.size > maxSize) {
+      alert(`Image size (${(file.size / 1024 / 1024).toFixed(2)}MB) exceeds the 10MB limit.`)
+      e.target.value = ""
+      return
+    }
+    setUploadingBlockId(id)
+    try {
+      const uploadResult = await uploadToVercelBlob(file)
+      updateBlock(id, { url: uploadResult.url })
+    } catch (error) {
+      console.error("Error uploading section image:", error)
+      alert(`Image upload failed: ${error instanceof Error ? error.message : "Unknown error"}`)
+    } finally {
+      setUploadingBlockId(null)
+      e.target.value = ""
+    }
+  }
+
   // Blog management functions
   const handleBlogSubmit = async () => {
-    if (!blogFormData.title || !blogFormData.excerpt || !blogFormData.content) return
+    // Plain-text version of the body (used for read-time + legacy content field)
+    const bodyText = blogFormData.blocks
+      .filter((b): b is Extract<ContentBlock, { type: "heading" | "paragraph" }> => b.type !== "image")
+      .map((b) => b.text)
+      .join(" ")
+      .trim()
+    const contentText = bodyText || blogFormData.content
+
+    if (!blogFormData.title || !blogFormData.excerpt || !contentText) return
 
     let imageUrl = editingPost?.image || ""
-    
+
     if (selectedBlogImage) {
       try {
         const uploadResult = await uploadToVercelBlob(selectedBlogImage)
@@ -216,13 +287,16 @@ export default function AdminDashboard() {
       }
     }
 
+    const wordCount = contentText.split(/\s+/).filter(Boolean).length
+
     const newPost: BlogPost = {
       id: editingPost ? editingPost.id : Date.now().toString(),
       title: blogFormData.title,
       excerpt: blogFormData.excerpt,
-      content: blogFormData.content,
+      content: contentText,
+      blocks: blogFormData.blocks,
       date: new Date().toISOString().split('T')[0],
-      readTime: `${Math.ceil(blogFormData.content.split(' ').length / 200)} min read`,
+      readTime: `${Math.max(1, Math.ceil(wordCount / 200))} min read`,
       tags: blogFormData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
       image: imageUrl
     }
@@ -235,7 +309,7 @@ export default function AdminDashboard() {
     }
 
     savePosts(updatedPosts)
-    setBlogFormData({ title: "", excerpt: "", content: "", tags: "", image: "" })
+    setBlogFormData({ title: "", excerpt: "", content: "", tags: "", image: "", blocks: [] })
     setSelectedBlogImage(null)
     setEditingPost(null)
     setBlogDialogOpen(false)
@@ -248,7 +322,18 @@ export default function AdminDashboard() {
       excerpt: post.excerpt,
       content: post.content,
       tags: post.tags.join(', '),
-      image: post.image || ""
+      image: post.image || "",
+      // Seed the block editor: use saved blocks, or convert legacy plain content into paragraphs
+      blocks:
+        post.blocks && post.blocks.length > 0
+          ? post.blocks
+          : (post.content
+              ? post.content
+                  .split(/\n{2,}/)
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+                  .map((p) => ({ id: newBlockId(), type: "paragraph" as const, text: p }))
+              : [])
     })
     setSelectedBlogImage(null)
     setBlogDialogOpen(true)
@@ -393,7 +478,7 @@ export default function AdminDashboard() {
 
   const handleNewPost = () => {
     setEditingPost(null)
-    setBlogFormData({ title: "", excerpt: "", content: "", tags: "", image: "" })
+    setBlogFormData({ title: "", excerpt: "", content: "", tags: "", image: "", blocks: [] })
     setSelectedBlogImage(null)
     setBlogDialogOpen(true)
   }
@@ -934,15 +1019,99 @@ export default function AdminDashboard() {
                   />
                 </div>
                 
-                <div className="grid gap-2">
-                  <Label htmlFor="blog-content">Content</Label>
-                  <Textarea
-                    id="blog-content"
-                    value={blogFormData.content}
-                    onChange={(e) => setBlogFormData({ ...blogFormData, content: e.target.value })}
-                    placeholder="Write your full post content here"
-                    rows={8}
-                  />
+                <div className="grid gap-3">
+                  <div className="flex items-center justify-between">
+                    <Label>Article content</Label>
+                    <span className="text-xs text-muted-foreground">Add section titles and images between paragraphs</span>
+                  </div>
+
+                  {blogFormData.blocks.length === 0 && (
+                    <p className="border border-dashed border-border p-4 text-sm text-muted-foreground">
+                      Nothing here yet. Add a section title, paragraph, or image below.
+                    </p>
+                  )}
+
+                  <div className="space-y-3">
+                    {blogFormData.blocks.map((block, i) => (
+                      <div key={block.id} className="border border-border p-3">
+                        <div className="mb-2 flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                            {block.type === "heading" ? <Heading className="h-3.5 w-3.5" /> : block.type === "image" ? <ImageIcon className="h-3.5 w-3.5" /> : <Type className="h-3.5 w-3.5" />}
+                            {block.type === "heading" ? "Section title" : block.type === "image" ? "Image" : "Paragraph"}
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <Button type="button" variant="ghost" size="icon" className="h-7 w-7" onClick={() => moveBlock(block.id, -1)} disabled={i === 0}>
+                              <ChevronUp className="h-4 w-4" />
+                            </Button>
+                            <Button type="button" variant="ghost" size="icon" className="h-7 w-7" onClick={() => moveBlock(block.id, 1)} disabled={i === blogFormData.blocks.length - 1}>
+                              <ChevronDown className="h-4 w-4" />
+                            </Button>
+                            <Button type="button" variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive" onClick={() => removeBlock(block.id)}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        {block.type === "heading" && (
+                          <Input
+                            value={block.text}
+                            onChange={(e) => updateBlock(block.id, { text: e.target.value })}
+                            placeholder="Section title"
+                            className="text-base font-semibold"
+                          />
+                        )}
+
+                        {block.type === "paragraph" && (
+                          <Textarea
+                            value={block.text}
+                            onChange={(e) => updateBlock(block.id, { text: e.target.value })}
+                            placeholder="Write this paragraph…"
+                            rows={4}
+                          />
+                        )}
+
+                        {block.type === "image" && (
+                          <div className="space-y-2">
+                            {block.url ? (
+                              <img src={block.url} alt="" className="max-h-52 w-full border border-border object-cover" />
+                            ) : (
+                              <div className="flex h-24 items-center justify-center border border-dashed border-border text-xs text-muted-foreground">
+                                {uploadingBlockId === block.id ? "Uploading…" : "No image selected"}
+                              </div>
+                            )}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              disabled={uploadingBlockId === block.id}
+                              onChange={(e) => handleBlockImageUpload(block.id, e)}
+                              className="block w-full text-sm text-muted-foreground file:mr-3 file:border file:border-border file:bg-background file:px-3 file:py-1.5 file:text-sm file:font-medium hover:file:bg-muted"
+                            />
+                            <Input
+                              value={block.caption}
+                              onChange={(e) => updateBlock(block.id, { caption: e.target.value })}
+                              placeholder="Caption (optional)"
+                              className="text-sm"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    <Button type="button" variant="outline" size="sm" className="gap-2" onClick={() => addBlock("heading")}>
+                      <Heading className="h-4 w-4" />
+                      Section title
+                    </Button>
+                    <Button type="button" variant="outline" size="sm" className="gap-2" onClick={() => addBlock("paragraph")}>
+                      <Type className="h-4 w-4" />
+                      Paragraph
+                    </Button>
+                    <Button type="button" variant="outline" size="sm" className="gap-2" onClick={() => addBlock("image")}>
+                      <ImageIcon className="h-4 w-4" />
+                      Image
+                    </Button>
+                  </div>
                 </div>
                 
                 <div className="grid gap-2">
@@ -956,7 +1125,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="blog-image">Post Image (Optional)</Label>
+                  <Label htmlFor="blog-image">Cover image (main, optional)</Label>
                   <div className="flex gap-2">
                     <input
                       ref={blogImageInputRef}

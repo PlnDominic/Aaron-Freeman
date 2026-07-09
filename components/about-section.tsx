@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Globe3D from "@/components/globe-3d"
+import Image from "next/image"
 
 export default function AboutSection() {
   return (
@@ -52,17 +52,30 @@ export default function AboutSection() {
               </div>
             </motion.div>
 
-            {/* Right - 3D Globe */}
+            {/* Right - Studio candid */}
             <motion.div
-              className="flex justify-center lg:justify-end items-center"
+              className="flex justify-center lg:justify-end items-start"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="w-full max-w-lg"> {/* max-w-lg to match Globe3D component */}
-              <Globe3D />
-              </div>
+              <figure className="relative w-full max-w-md">
+                <div className="absolute -left-3 -top-3 h-14 w-14 border-l border-t border-[hsl(var(--gold))]" />
+                <div className="absolute -bottom-3 -right-3 h-14 w-14 border-b border-r border-[hsl(var(--gold))]" />
+                <div className="relative aspect-[4/5] w-full overflow-hidden border border-border">
+                  <Image
+                    src="/images/aaron-studio.jpg"
+                    alt="Aaron Freeman in the studio"
+                    fill
+                    className="object-cover grayscale"
+                    sizes="(max-width: 1024px) 100vw, 28rem"
+                  />
+                </div>
+                <figcaption className="mt-3 text-sm text-muted-foreground">
+                  In the studio — reviewing plans in Brisbane.
+                </figcaption>
+              </figure>
             </motion.div>
           </div>
 

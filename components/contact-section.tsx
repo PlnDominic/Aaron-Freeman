@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -149,8 +150,14 @@ export default function ContactSection() {
                 ))}
                     </div>
 
-              <div className="mt-6 h-48 bg-muted/50 dark:bg-muted/20 rounded-lg flex items-center justify-center text-muted-foreground">
-                <p>Map Area / Image Placeholder</p>
+              <div className="relative mt-6 h-56 w-full overflow-hidden border border-border">
+                <Image
+                  src="/images/aaron-desk.jpg"
+                  alt="Aaron Freeman at his desk"
+                  fill
+                  className="object-cover grayscale"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
             </motion.div>
 
