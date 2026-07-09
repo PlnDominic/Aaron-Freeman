@@ -563,242 +563,69 @@ export default function AdminDashboard() {
     return null // No visible button - access via secret key sequence "adminaccess"
   }
 
+  const adminTabs = [
+    { value: "blog", label: "Posts" },
+    { value: "projects", label: "Projects" },
+    { value: "resume", label: "Resume" },
+    { value: "credentials", label: "Certificates" },
+  ]
+
   return (
-    <div className="fixed inset-0 z-[9999] bg-black">
-      <div className="absolute inset-4 bg-gradient-to-br from-slate-950 via-gray-900 to-black border-2 border-amber-400/50 rounded-2xl shadow-2xl shadow-amber-500/30 overflow-hidden">
-        {/* Matrix-style digital grid background */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="w-full h-full" style={{
-            backgroundImage: `
-              linear-gradient(#d49a5c 1px, transparent 1px),
-              linear-gradient(90deg, cyan 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px'
-          }} />
-        </div>
-        
-        {/* Animated circuit lines */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Horizontal lines */}
-          <motion.div
-            className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scaleX: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scaleX: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
-          
-          {/* Vertical lines */}
-          <motion.div
-            className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scaleY: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5
-            }}
-          />
-          <motion.div
-            className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent"
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scaleY: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
-          />
-          
-          {/* Corner circuit nodes */}
-          <motion.div
-            className="absolute top-8 left-8 w-4 h-4 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div
-            className="absolute top-8 right-8 w-4 h-4 bg-purple-400 rounded-full shadow-lg shadow-purple-400/50"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5
-            }}
-          />
-          <motion.div
-            className="absolute bottom-8 left-8 w-4 h-4 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-          />
-          <motion.div
-            className="absolute bottom-8 right-8 w-4 h-4 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50"
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1.5
-            }}
-          />
-          
-          {/* Flowing data particles */}
-          <motion.div
-            className="absolute top-1/2 left-0 w-2 h-2 bg-amber-300 rounded-full shadow-sm"
-            animate={{
-              x: [0, window.innerWidth || 1200, 0],
-              opacity: [0, 1, 0]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-          <motion.div
-            className="absolute top-1/3 left-0 w-1.5 h-1.5 bg-purple-300 rounded-full shadow-sm"
-            animate={{
-              x: [0, window.innerWidth || 1200, 0],
-              opacity: [0, 1, 0]
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 2
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 p-6 h-full overflow-y-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            className="flex items-center justify-between mb-8"
-          >
-            <div className="flex items-center gap-4">
-              <motion.div
-                className="p-3 bg-gradient-to-r from-amber-500 to-blue-600 rounded-xl shadow-lg shadow-amber-500/25"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Shield className="w-8 h-8 text-white" />
-              </motion.div>
-              <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-amber-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Neural Command Center
-                </h2>
-                <p className="text-slate-400 text-sm">Advanced Portfolio Management System</p>
-              </div>
+    <div className="fixed inset-0 z-[9999] overflow-y-auto bg-white text-foreground">
+      {/* Top bar */}
+      <div className="sticky top-0 z-10 border-b border-border bg-white/90 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center border border-foreground">
+              <Shield className="h-4 w-4" />
+            </span>
+            <div className="leading-tight">
+              <p className="text-sm font-bold uppercase tracking-[0.14em]">Admin</p>
+              <p className="text-xs text-muted-foreground">Content management</p>
             </div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant="outline"
-                onClick={() => setIsVisible(false)}
-                className="gap-2 bg-slate-800/50 border-amber-500/30 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400/50 backdrop-blur-sm"
-              >
-                <EyeOff className="h-4 w-4" />
-                Deactivate
-              </Button>
-            </motion.div>
-          </motion.div>
+          </div>
+          <Button
+            variant="ghost"
+            onClick={() => setIsVisible(false)}
+            className="gap-2 text-muted-foreground hover:text-foreground"
+          >
+            <EyeOff className="h-4 w-4" />
+            Close
+          </Button>
+        </div>
+      </div>
 
+      <div className="mx-auto max-w-6xl px-6 py-10">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-slate-900/90 to-slate-800/90 border border-amber-500/30 rounded-xl p-1 backdrop-blur-md mb-8">
-              <TabsTrigger 
-                value="blog" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-amber-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
-              >
-                <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
-                  <Cpu className="w-4 h-4" />
-                  Neural Posts
-                </motion.span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="projects" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-amber-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-amber-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
-              >
-                <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
-                  <Zap className="w-4 h-4" />
-                  Quantum Projects
-                </motion.span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="resume" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
-              >
-                <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
-                  <FileText className="w-4 h-4" />
-                  Bio-Data Core
-                </motion.span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="credentials" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-amber-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
-              >
-                <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
-                  <Award className="w-4 h-4" />
-                  Credentials Matrix
-                </motion.span>
-              </TabsTrigger>
+            <TabsList className="mb-10 flex h-auto w-full justify-start gap-8 border-b border-border bg-transparent p-0">
+              {adminTabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="relative border-0 bg-transparent px-0 pb-3 pt-0 text-sm font-medium uppercase tracking-[0.12em] text-muted-foreground shadow-none transition-colors data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:scale-x-0 after:bg-foreground after:transition-transform after:duration-200 data-[state=active]:after:scale-x-100"
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
-            <TabsContent value="blog" className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Manage Blog Posts</h3>
+            <TabsContent value="blog" className="space-y-6">
+              <div className="flex justify-between items-center border-b border-border pb-4">
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight">Posts</h3>
+                  <p className="text-sm text-muted-foreground">{posts.length} {posts.length === 1 ? "post" : "posts"}</p>
+                </div>
                 <Button onClick={handleNewPost} className="gap-2">
                   <Plus className="h-4 w-4" />
                   New Post
                 </Button>
               </div>
+
+              {posts.length === 0 && (
+                <div className="border border-dashed border-border py-16 text-center text-sm text-muted-foreground">
+                  No posts yet. Select “New Post” to create one.
+                </div>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {posts.map((post) => (
@@ -846,23 +673,32 @@ export default function AdminDashboard() {
               </div>
             </TabsContent>
 
-            <TabsContent value="projects" className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Manage Projects</h3>
+            <TabsContent value="projects" className="space-y-6">
+              <div className="flex justify-between items-center border-b border-border pb-4">
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight">Projects</h3>
+                  <p className="text-sm text-muted-foreground">{projects.length} {projects.length === 1 ? "project" : "projects"}</p>
+                </div>
                 <Button onClick={handleNewProject} className="gap-2">
                   <Plus className="h-4 w-4" />
                   New Project
                 </Button>
               </div>
 
+              {projects.length === 0 && (
+                <div className="border border-dashed border-border py-16 text-center text-sm text-muted-foreground">
+                  No projects yet. Select “New Project” to add one.
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {projects.map((project) => (
                   <Card key={project.id} className="h-fit">
                     <CardHeader>
                       {project.pdfFile && (
-                        <div className="relative w-full h-32 mb-3 rounded-lg overflow-hidden bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
-                          <FileText className="w-16 h-16 text-white" />
-                          <div className="absolute bottom-2 right-2 bg-red-700 text-white text-xs font-bold px-2 py-1 rounded">
+                        <div className="relative w-full h-32 mb-3 overflow-hidden bg-neutral-950 flex items-center justify-center">
+                          <FileText className="w-14 h-14 text-white/90" />
+                          <div className="absolute bottom-2 right-2 border border-white/25 text-white/85 text-[10px] font-medium uppercase tracking-wider px-2 py-1">
                             PDF
                           </div>
                         </div>
@@ -912,9 +748,10 @@ export default function AdminDashboard() {
               </div>
             </TabsContent>
 
-            <TabsContent value="resume" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Resume/CV Management</h3>
+            <TabsContent value="resume" className="space-y-6">
+              <div className="border-b border-border pb-4">
+                <h3 className="text-xl font-bold tracking-tight">Resume</h3>
+                <p className="text-sm text-muted-foreground">Upload and manage your CV</p>
               </div>
 
               <Card>
@@ -1007,14 +844,23 @@ export default function AdminDashboard() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="credentials" className="space-y-4">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Manage Certificates</h3>
+            <TabsContent value="credentials" className="space-y-6">
+              <div className="flex justify-between items-center border-b border-border pb-4">
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight">Certificates</h3>
+                  <p className="text-sm text-muted-foreground">{certificates.length} {certificates.length === 1 ? "certificate" : "certificates"}</p>
+                </div>
                 <Button onClick={handleNewCertificate} className="gap-2">
                   <Plus className="h-4 w-4" />
                   New Certificate
                 </Button>
               </div>
+
+              {certificates.length === 0 && (
+                <div className="border border-dashed border-border py-16 text-center text-sm text-muted-foreground">
+                  No certificates yet. Select “New Certificate” to add one.
+                </div>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {certificates.map((certificate) => (
@@ -1288,14 +1134,14 @@ export default function AdminDashboard() {
                     )}
                   </div>
                   {selectedProjectPdf && (
-                    <div className="mt-2 flex items-center gap-2 p-3 bg-red-50 dark:bg-red-950/20 rounded border">
-                      <FileText className="w-8 h-8 text-red-600" />
+                    <div className="mt-2 flex items-center gap-2 p-3 bg-muted border border-border">
+                      <FileText className="w-7 h-7 text-foreground" />
                       <span className="text-sm font-medium">{selectedProjectPdf.name}</span>
                     </div>
                   )}
                   {!selectedProjectPdf && editingProject?.pdfFile && (
-                    <div className="mt-2 flex items-center gap-2 p-3 bg-red-50 dark:bg-red-950/20 rounded border">
-                      <FileText className="w-8 h-8 text-red-600" />
+                    <div className="mt-2 flex items-center gap-2 p-3 bg-muted border border-border">
+                      <FileText className="w-7 h-7 text-foreground" />
                       <span className="text-sm font-medium">Current Project PDF</span>
                     </div>
                   )}
@@ -1411,7 +1257,6 @@ export default function AdminDashboard() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
-        </div>
       </div>
     </div>
   )

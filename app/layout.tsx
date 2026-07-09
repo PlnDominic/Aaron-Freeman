@@ -29,7 +29,7 @@ export default function RootLayout({
         >
           <div className="relative flex flex-col min-h-screen">
           <Header />
-            <main className="flex-grow relative z-10">{children}</main>
+            <main className="flex-grow relative">{children}</main>
           <Footer />
           </div>
         </ThemeProvider>
