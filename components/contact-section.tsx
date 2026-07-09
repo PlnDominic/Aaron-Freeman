@@ -71,7 +71,7 @@ export default function ContactSection() {
   return (
     <section 
       id="contact" 
-      className={`${contactSectionBg} bg-gradient-to-b from-background/70 to-background`}
+      className={`${contactSectionBg} bg-background`}
     >
       <div className="section-padding relative z-10">
         <motion.div

@@ -104,7 +104,7 @@ export default function ResumeSection() {
   }
 
   return (
-    <section id="credentials" className="py-20 bg-gradient-to-b from-background/50 to-background">
+    <section id="credentials" className="py-24 bg-background">
       <div className="section-padding">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -132,7 +132,7 @@ export default function ResumeSection() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="lg:col-span-2"
               >
-                <Card className="group hover:shadow-2xl transition-all duration-500 border-2 border-primary/20 bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-sm">
+                <Card className="group hover:shadow-2xl transition-all duration-500 border border-border bg-card">
                   <CardHeader className="text-center pb-8">
                     <motion.div
                       className="mx-auto mb-6 relative"
@@ -140,7 +140,7 @@ export default function ResumeSection() {
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       {/* Large PDF Icon */}
-                      <div className="w-32 h-32 mx-auto bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
+                      <div className="w-32 h-32 mx-auto bg-neutral-950 rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <FileText className="w-16 h-16 text-white relative z-10" />
                       </div>
@@ -188,7 +188,7 @@ export default function ResumeSection() {
                       <Button 
                         onClick={handleResumeDownload}
                         size="lg"
-                        className="w-full bg-gradient-to-r from-primary to-amber-600 hover:from-primary/90 hover:to-amber-600/90 text-white font-semibold py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                        className="w-full btn-primary py-6 text-lg"
                       >
                         <Download className="w-6 h-6 mr-3" />
                         Download Resume
@@ -238,7 +238,7 @@ export default function ResumeSection() {
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                     >
-                      <Card className="group hover:shadow-xl transition-all duration-300 border border-amber-200/50 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/20 dark:to-orange-950/20 backdrop-blur-sm">
+                      <Card className="group hover:shadow-xl transition-all duration-300 border border-border bg-card">
                         <CardHeader className="text-center pb-4">
                           <motion.div
                             className="mx-auto mb-4 relative"
@@ -246,7 +246,7 @@ export default function ResumeSection() {
                             transition={{ type: "spring", stiffness: 300 }}
                           >
                             {/* PDF Certificate Icon */}
-                            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                            <div className="w-20 h-20 mx-auto bg-neutral-950 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 relative overflow-hidden">
                               <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                               <FileText className="w-10 h-10 text-white relative z-10" />
                             </div>
@@ -286,7 +286,7 @@ export default function ResumeSection() {
                             <Button 
                               onClick={() => handleCertificateDownload(certificate)}
                               size="sm"
-                              className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium text-xs transition-all duration-300 shadow-md hover:shadow-lg"
+                              className="w-full btn-primary text-xs"
                             >
                               <Download className="w-3 h-3 mr-2" />
                               Download

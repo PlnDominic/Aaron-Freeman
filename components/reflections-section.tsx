@@ -89,7 +89,7 @@ export default function ReflectionsSection() {
   }, [])
 
   return (
-    <section id="reflections" className="section-navy py-20 bg-gradient-to-b from-background to-background/50">
+    <section id="reflections" className="section-navy py-24">
       <div className="section-padding">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

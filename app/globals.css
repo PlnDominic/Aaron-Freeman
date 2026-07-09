@@ -4,84 +4,83 @@
 
 @layer base {
   :root {
-    /* AusUrban-inspired palette: off-white background, dark navy text, warm gold accent */
-    --background: 197 26% 95%; /* Off-white (#eef3f5) */
-    --foreground: 202 55% 13%; /* Dark Navy (#0f2633) */
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 202 55% 13%; /* Dark Navy */
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 202 55% 13%; /* Dark Navy */
-    --primary: 31 58% 60%; /* Warm Gold (#d49a5c) */
-    --primary-foreground: 202 55% 13%; /* Dark Navy */
-    --secondary: 31 45% 92%; /* Pale Gold */
-    --secondary-foreground: 31 60% 32%; /* Deep Gold */
-    --muted: 197 18% 92%; /* Light Neutral */
-    --muted-foreground: 202 20% 40%; /* Slate Navy */
-    --accent: 31 58% 60%; /* Warm Gold */
-    --accent-foreground: 202 55% 13%; /* Dark Navy */
-    --destructive: 0 84.2% 60.2%;
+    /* Minimalist monochrome palette: white surfaces, near-black ink,
+       a single restrained warm-gold accent (--gold) used sparingly. */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 0 0% 9%;            /* near-black — buttons, rings */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 197 18% 86%; /* Light Border */
-    --input: 197 18% 86%;
-    --ring: 31 58% 60%; /* Warm Gold */
-    --radius: 0.75rem; /* Slightly larger radius */
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 9%;
+    --radius: 0rem;
+    --gold: 31 55% 46%;            /* single accent */
 
-    /* Custom light theme variables */
-    --light-bg-start: 0 0% 100%; /* White */
-    --light-bg-end: 197 26% 93%; /* Off-white */
-    --light-text-primary: 202 55% 13%; /* Dark Navy */
-    --light-text-secondary: 202 25% 35%; /* Slate Navy */
-    --light-card-bg: 0 0% 100%; /* White */
-    --light-card-border: 197 18% 88%; /* Light Border */
-    --light-button-primary-bg: 31 58% 60%; /* Warm Gold */
-    --light-button-primary-text: 202 55% 13%; /* Dark Navy */
-    --light-button-secondary-border: 31 55% 55%;
-    --light-button-secondary-text: 31 65% 38%;
-    --light-neon-text-shadow: 0 0 8px rgba(212, 154, 92, 0.4), 0 0 15px rgba(212, 154, 92, 0.3), 0 0 25px rgba(212, 154, 92, 0.2);
-    --light-glow-effect: 0 0 15px rgba(212, 154, 92, 0.2), 0 0 30px rgba(212, 154, 92, 0.1), 0 0 50px rgba(212, 154, 92, 0.05);
-    --light-grid-color: rgba(212, 154, 92, 0.15);
+    --light-text-primary: 0 0% 7%;
+    --light-text-secondary: 0 0% 38%;
+    --light-card-bg: 0 0% 100%;
+    --light-card-border: 0 0% 88%;
+    --light-button-secondary-text: 0 0% 9%;
+    --light-button-secondary-border: 0 0% 20%;
   }
 
   .dark {
-    --background: 205 52% 8%; /* Deep Navy */
-    --foreground: 197 26% 95%; /* Off-white */
-    --card: 207 52% 12%; /* Navy Card */
-    --card-foreground: 197 26% 95%;
-    --popover: 205 52% 8%;
-    --popover-foreground: 197 26% 95%;
-    --primary: 31 65% 58%; /* Warm Gold */
-    --primary-foreground: 202 55% 10%; /* Dark Navy */
-    --secondary: 205 30% 18%; /* Dark Slate Navy */
-    --secondary-foreground: 197 26% 92%;
-    --muted: 205 30% 16%;
-    --muted-foreground: 197 15% 65%;
-    --accent: 31 65% 58%; /* Warm Gold */
-    --accent-foreground: 202 55% 10%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 205 30% 22%; /* Dark Navy Border */
-    --input: 205 30% 22%;
-    --ring: 31 65% 58%; /* Warm Gold */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 80%;
+    --gold: 31 60% 56%;
 
-    /* Custom dark theme variables (override if needed, otherwise inherits from :root if not redefined) */
-    --dark-neon-text-shadow: 0 0 10px rgba(212, 154, 92, 0.6), 0 0 20px rgba(212, 154, 92, 0.4), 0 0 35px rgba(212, 154, 92, 0.2);
-    --dark-glow-effect: 0 0 20px rgba(212, 154, 92, 0.3), 0 0 40px rgba(212, 154, 92, 0.2), 0 0 60px rgba(212, 154, 92, 0.1);
-    --dark-grid-color: rgba(212, 154, 92, 0.1);
+    --light-text-primary: 0 0% 98%;
+    --light-text-secondary: 0 0% 60%;
+    --light-card-bg: 0 0% 0%;
+    --light-card-border: 0 0% 18%;
+    --light-button-secondary-text: 0 0% 98%;
+    --light-button-secondary-border: 0 0% 40%;
   }
 }
 
 @layer base {
+  /* Minimalist: no rounded corners anywhere. */
+  *,
+  *::before,
+  *::after {
+    border-radius: 0 !important;
+  }
+
   * {
-    @apply border-border transition-colors duration-300;
+    @apply border-border;
   }
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
-    /* Light theme specific body background */
-    background-image: linear-gradient(to bottom, hsl(var(--light-bg-start)), hsl(var(--light-bg-end)));
-  }
-  .dark body {
-    /* Dark theme specific body background */
-    background-image: linear-gradient(to bottom, hsl(205 52% 8%), hsl(207 52% 12%));
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -89,57 +88,54 @@
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Fixed dark-navy "signature" band, independent of the light/dark mode toggle
-   (mirrors AusUrban's alternating light/navy sections). Every rule below that
-   reads --foreground, --light-text-primary, etc. picks these up automatically
-   via CSS variable cascade, regardless of the rule's own selector. */
+/* Fixed pure-black "signature" band, independent of the light/dark toggle.
+   Rules that read --foreground / --light-text-* pick these up via the
+   CSS variable cascade regardless of their own selector. */
 .section-navy {
-  --background: 205 52% 8%;
-  --foreground: 197 26% 95%;
-  --card: 207 52% 12%;
-  --card-foreground: 197 26% 95%;
-  --secondary: 205 30% 18%;
-  --secondary-foreground: 197 26% 92%;
-  --muted: 205 30% 16%;
-  --muted-foreground: 197 15% 65%;
-  --border: 205 30% 22%;
-  --input: 205 30% 22%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 98%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 62%;
+  --border: 0 0% 20%;
+  --input: 0 0% 20%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 4%;
+  --gold: 31 60% 58%;
 
-  --light-text-primary: 197 26% 95%;
-  --light-text-secondary: 197 15% 65%;
-  --light-card-bg: 207 52% 12%;
-  --light-card-border: 205 30% 22%;
-  --light-button-secondary-text: 31 60% 65%;
-  --light-button-secondary-border: 31 55% 55%;
+  --light-text-primary: 0 0% 98%;
+  --light-text-secondary: 0 0% 62%;
+  --light-card-bg: 0 0% 0%;
+  --light-card-border: 0 0% 20%;
+  --light-button-secondary-text: 0 0% 98%;
+  --light-button-secondary-border: 0 0% 40%;
 
-  background-color: hsl(var(--background));
+  background-color: #000;
   color: hsl(var(--foreground));
 }
 
-/* Base heading styles — refined, AusUrban-style layout (keeps the site's Inter typeface) */
+/* Section heading — bold, tight, monochrome */
 .section-title {
   @apply text-4xl md:text-5xl font-bold tracking-tight mb-6 text-center;
   color: hsl(var(--foreground));
-}
-html:not(.dark) .section-title {
-  color: hsl(var(--light-text-primary));
+  letter-spacing: -0.02em;
 }
 
-/* Uppercase gold eyebrow label sitting above a section title */
+/* Uppercase gold eyebrow label above a section title */
 .eyebrow {
   @apply inline-block text-xs font-semibold uppercase mb-3;
-  letter-spacing: 0.16em;
-  color: hsl(var(--primary));
-}
-html:not(.dark) .eyebrow {
-  color: hsl(31 65% 42%); /* deeper gold for contrast on light backgrounds */
+  letter-spacing: 0.2em;
+  color: hsl(var(--gold));
 }
 
-/* Thin gold "blueprint" rule used as a section divider accent */
+/* Thin gold rule used as a section divider accent */
 .blueprint-rule {
   height: 1px;
-  width: 56px;
-  background-color: hsl(var(--primary));
+  width: 48px;
+  background-color: hsl(var(--gold));
   border: 0;
 }
 .blueprint-rule.mx-auto {
@@ -151,163 +147,73 @@ html:not(.dark) .eyebrow {
   @apply text-2xl md:text-3xl font-semibold mb-4;
   color: hsl(var(--foreground));
 }
-html:not(.dark) .section-subtitle {
-  color: hsl(var(--light-text-secondary));
-}
 
-/* Card styles */
+/* Flat card — hairline border, no shadow, no radius */
 .custom-card {
-  @apply rounded-lg shadow-lg overflow-hidden transition-all duration-300;
+  @apply overflow-hidden transition-colors duration-200;
   background-color: hsl(var(--card));
   border: 1px solid hsl(var(--border));
-  }
-html:not(.dark) .custom-card {
-  background-color: hsl(var(--light-card-bg));
-  border-color: hsl(var(--light-card-border));
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.07);
-  }
-.dark .custom-card {
-  box-shadow: 0 0 30px rgba(212, 154, 92, 0.12); /* Subtle gold glow for dark cards */
 }
 
-/* Button styles */
+/* Buttons — flat, sharp, invert on hover */
 .btn-primary {
-  @apply px-6 py-3 rounded-md font-semibold transition-all duration-300;
+  @apply px-7 py-3 font-medium transition-colors duration-200;
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
-  border: 1px solid transparent;
+  border: 1px solid hsl(var(--primary));
 }
-html:not(.dark) .btn-primary {
-  background-color: hsl(var(--light-button-primary-bg));
-  color: hsl(var(--light-button-primary-text));
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
 .btn-primary:hover {
-  filter: brightness(110%);
-}
-html:not(.dark) .btn-primary:hover {
-  filter: brightness(105%);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  }
-
-.btn-secondary {
-  @apply px-6 py-3 rounded-md font-semibold transition-all duration-300;
   background-color: transparent;
   color: hsl(var(--primary));
-  border: 1px solid hsl(var(--primary));
-  }
-html:not(.dark) .btn-secondary {
-  color: hsl(var(--light-button-secondary-text));
-  border-color: hsl(var(--light-button-secondary-border));
-  }
-.btn-secondary:hover {
-  background-color: hsl(var(--primary) / 0.1);
-}
-html:not(.dark) .btn-secondary:hover {
-  background-color: hsl(var(--light-button-secondary-border) / 0.08);
-  border-color: hsl(var(--light-button-secondary-border) / 0.7);
 }
 
-/* Neon glow retired in favour of AusUrban's clean, flat treatment.
-   Classes kept as no-ops so existing markup stays valid. */
+.btn-secondary {
+  @apply px-7 py-3 font-medium transition-colors duration-200;
+  background-color: transparent;
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+}
+.btn-secondary:hover {
+  border-color: hsl(var(--foreground));
+}
+
+/* Decorative effects retired for the minimalist look; kept as no-ops
+   so existing markup stays valid. */
 .neon-text {
   text-shadow: none;
 }
-html:not(.dark) .neon-text {
-  text-shadow: none;
-}
-
 .glow-effect {
-  box-shadow: 0 20px 45px -20px rgba(15, 38, 51, 0.35);
+  box-shadow: none;
 }
-html:not(.dark) .glow-effect {
-  box-shadow: 0 20px 45px -22px rgba(15, 38, 51, 0.25);
-}
-
-/* Cyber Grid */
 .cyber-grid {
-  background-image: linear-gradient(var(--dark-grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--dark-grid-color) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-html:not(.dark) .cyber-grid {
-  background-image: linear-gradient(var(--light-grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--light-grid-color) 1px, transparent 1px);
+  background-image: none;
 }
 
-/* Futuristic animations (can remain generic or be themed) */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); } /* Slightly less float */
+  50% { transform: translateY(-15px); }
 }
 
 @keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.6); opacity: 0; }
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.5); opacity: 0; }
 }
 .pulse-ring {
-  animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-}
-html:not(.dark) .pulse-ring {
-  border-color: hsl(var(--light-button-secondary-border) / 0.5);
-}
-.dark .pulse-ring {
-  border-color: hsl(var(--primary) / 0.4);
+  animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  border-color: hsl(var(--border));
 }
 
-
-/* Ensure specific component backgrounds use these variables for theme consistency */
-/* Example: ProjectsSection background */
+/* Flat section backgrounds */
 .projects-section-bg {
   @apply relative overflow-hidden py-20;
-  background-image: linear-gradient(to bottom, hsl(var(--background) / 0.8), hsl(var(--background))); 
+  background-color: hsl(var(--background));
 }
-html:not(.dark) .projects-section-bg {
-  background-image: linear-gradient(to bottom, hsl(197 26% 96%), hsl(197 22% 90%)); /* Light theme specific gradient */
-}
-.dark .projects-section-bg {
-  background-image: linear-gradient(to bottom, hsl(207 52% 12% / 0.5), hsl(205 52% 8%)); /* Dark theme specific gradient */
-}
-
-/* Example: AboutSection background */
 .about-section-bg {
   @apply relative overflow-hidden py-20;
-}
-html:not(.dark) .about-section-bg {
-  background-image: linear-gradient(to bottom, hsl(0 0% 100%), hsl(197 26% 95%)); /* Lighter gradient for About */
-}
-.dark .about-section-bg {
-  background-image: linear-gradient(to bottom, hsl(205 52% 8%), hsl(207 52% 12% / 0.7));
+  background-color: hsl(var(--background));
 }
 
-
-/* Ensure specific components use text variables */
-html:not(.dark) .text-cyan-300 { /* Example, adjust based on actual usage */
-  color: hsl(var(--light-text-secondary)); 
-}
-html:not(.dark) .text-cyan-400 {
-  color: hsl(var(--light-button-secondary-text));
-}
-html:not(.dark) .text-gray-200 {
-  color: hsl(var(--light-text-primary));
-}
-html:not(.dark) .text-gray-300 {
-  color: hsl(var(--light-text-secondary));
-}
-html:not(.dark) .text-gray-400 {
-  color: hsl(var(--light-text-secondary) / 0.85); /* Slightly muted */
-}
-
-/* Badge overrides for light theme */
-html:not(.dark) .badge-custom {
-  @apply bg-amber-100 text-amber-800 border-amber-300;
-  /* Example: bg-hsl(var(--secondary)) text-hsl(var(--secondary-foreground)) border-hsl(var(--primary) / 0.3) */
-}
-
-/* Ensure icons adapt */
-html:not(.dark) .lucide-icon {
-  color: hsl(var(--light-button-secondary-text));
-}
-.dark .lucide-icon {
-  color: hsl(var(--primary));
+/* Icon accent */
+.lucide-icon {
+  color: hsl(var(--gold));
 }

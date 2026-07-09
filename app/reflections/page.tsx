@@ -56,7 +56,7 @@ export default function ReflectionsPage() {
 
   if (selectedPost) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-background/50">
+      <div className="min-h-screen bg-background">
         <div className="section-padding py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -103,7 +103,7 @@ export default function ReflectionsPage() {
                   </div>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
+                <h1 className="section-title text-left md:text-left">
                   {selectedPost.title}
                 </h1>
 
@@ -129,7 +129,7 @@ export default function ReflectionsPage() {
               <footer className="mt-12 pt-8 border-t border-border">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-amber-600 rounded-full flex items-center justify-center text-white font-bold">
+                    <div className="w-12 h-12 bg-foreground flex items-center justify-center text-background font-bold">
                       AF
                     </div>
                     <div>
@@ -154,7 +154,7 @@ export default function ReflectionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/50">
+    <div className="min-h-screen bg-background">
       <div className="section-padding py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -169,7 +169,7 @@ export default function ReflectionsPage() {
               </Button>
             </Link>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
+            <h1 className="section-title text-left md:text-left">
               Reflections & Insights
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
