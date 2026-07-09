@@ -35,7 +35,7 @@ export function ThemeToggle() {
             rotate: theme === "dark" ? 0 : 180,
           }}
           transition={{ duration: 0.2 }}
-          className="absolute inset-0 flex items-center justify-center text-cyan-400"
+          className="absolute inset-0 flex items-center justify-center text-amber-400"
         >
           <Moon className="h-5 w-5" />
         </motion.div>

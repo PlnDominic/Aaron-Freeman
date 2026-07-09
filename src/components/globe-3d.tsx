@@ -67,7 +67,7 @@ export default function Globe3D() {
       // Add wireframe overlay
       const wireframeGeo = new THREE_Instance.SphereGeometry(globeRadius + 0.01, 48, 48);
       const wireframeMat = new THREE_Instance.MeshBasicMaterial({
-        color: 0x00ffff, 
+        color: 0xd49a5c, 
         wireframe: true,
         transparent: true,
         opacity: 0.20
@@ -139,7 +139,7 @@ export default function Globe3D() {
       const ambientLight = new THREE_Instance.AmbientLight(0x606060, 0.7)
       scene.add(ambientLight)
 
-      const pointLight = new THREE_Instance.PointLight(0x00ffff, 0.8, 150)
+      const pointLight = new THREE_Instance.PointLight(0xd49a5c, 0.8, 150)
       pointLight.position.set(8, 8, 8)
       scene.add(pointLight)
 
@@ -215,7 +215,7 @@ export default function Globe3D() {
       viewport={{ once: true }}
       transition={{ duration: 1 }}
     >
-      <div className="relative overflow-hidden rounded-full border border-cyan-500/30 bg-black/30 backdrop-blur-sm aspect-square">
+      <div className="relative overflow-hidden rounded-full border border-amber-500/30 bg-black/30 backdrop-blur-sm aspect-square">
         <div ref={mountRef} className="w-full h-full flex items-center justify-center" />
       </div>
 
@@ -226,7 +226,7 @@ export default function Globe3D() {
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.5 }}
       >
-        <h4 className="text-lg font-semibold text-cyan-300 dark:text-cyan-300 mb-2">Dynamic Worldview</h4>
+        <h4 className="text-lg font-semibold text-amber-400 dark:text-amber-300 mb-2">Dynamic Worldview</h4>
         <p className="text-gray-400 dark:text-gray-400 text-sm">Visualizing global interconnectedness and sustainable futures.</p>
       </motion.div>
     </motion.div>
