@@ -8,11 +8,17 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, ArrowLeft, User } from "lucide-react"
 
+type ContentBlock =
+  | { id: string; type: "heading"; text: string }
+  | { id: string; type: "paragraph"; text: string }
+  | { id: string; type: "image"; url: string; caption: string }
+
 interface BlogPost {
   id: string
   title: string
   excerpt: string
   content: string
+  blocks?: ContentBlock[]
   date: string
   readTime: string
   tags: string[]
@@ -72,29 +78,28 @@ export default function ReflectionsPage() {
             </Link>
 
             {/* Article */}
-            <article className="max-w-4xl mx-auto">
-              {selectedPost.image && (
-                <div className="w-full h-64 md:h-96 mb-8 rounded-2xl overflow-hidden">
-                  <img
-                    src={selectedPost.image}
-                    alt={selectedPost.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
+            <article className="max-w-3xl mx-auto">
+              <header className="mb-10">
+                <span className="eyebrow">Reflections</span>
+                <h1 className="mb-5 text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-foreground">
+                  {selectedPost.title}
+                </h1>
 
-              <header className="mb-8">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                <p className="mb-6 text-xl leading-relaxed text-muted-foreground">
+                  {selectedPost.excerpt}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-y border-border py-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4" />
                     <span>Aaron Freeman</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    <span>{new Date(selectedPost.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
+                    <span>{new Date(selectedPost.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -102,27 +107,61 @@ export default function ReflectionsPage() {
                     <span>{selectedPost.readTime}</span>
                   </div>
                 </div>
+              </header>
 
-                <h1 className="section-title text-left md:text-left">
-                  {selectedPost.title}
-                </h1>
+              {selectedPost.image && (
+                <figure className="mb-12">
+                  <img
+                    src={selectedPost.image}
+                    alt={selectedPost.title}
+                    className="w-full border border-border"
+                  />
+                </figure>
+              )}
 
-                <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                  {selectedPost.excerpt}
-                </p>
+              {/* Body — constrained measure for readability (~65ch) */}
+              <div className="mx-auto max-w-[65ch]">
+                {selectedPost.blocks && selectedPost.blocks.length > 0 ? (
+                  selectedPost.blocks.map((block) => {
+                    if (block.type === "heading") {
+                      return (
+                        <h2 key={block.id} className="mb-3 mt-12 text-2xl md:text-3xl font-bold tracking-tight text-foreground first:mt-0">
+                          {block.text}
+                        </h2>
+                      )
+                    }
+                    if (block.type === "image") {
+                      return (
+                        <figure key={block.id} className="my-10">
+                          {block.url && (
+                            <img src={block.url} alt={block.caption || ""} className="w-full border border-border" />
+                          )}
+                          {block.caption && (
+                            <figcaption className="mt-3 text-center text-sm italic text-muted-foreground">
+                              {block.caption}
+                            </figcaption>
+                          )}
+                        </figure>
+                      )
+                    }
+                    return (
+                      <p key={block.id} className="mb-6 text-lg leading-relaxed text-foreground/90">
+                        {block.text}
+                      </p>
+                    )
+                  })
+                ) : (
+                  <div className="whitespace-pre-wrap text-lg leading-relaxed text-foreground/90">
+                    {selectedPost.content}
+                  </div>
+                )}
 
-                <div className="flex flex-wrap gap-2">
+                <div className="mt-10 flex flex-wrap gap-2">
                   {selectedPost.tags.map((tag, index) => (
                     <Badge key={index} variant="secondary">
                       {tag}
                     </Badge>
                   ))}
-                </div>
-              </header>
-
-              <div className="prose prose-lg max-w-none dark:prose-invert">
-                <div className="text-lg leading-relaxed whitespace-pre-wrap">
-                  {selectedPost.content}
                 </div>
               </div>
 
