@@ -5,12 +5,7 @@ import Globe3D from "@/components/globe-3d"
 
 export default function AboutSection() {
   return (
-    <section id="about" className="section-navy relative overflow-hidden py-20">
-      {/* Subtle grid for background */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 cyber-grid"></div>
-      </div>
-
+    <section id="about" className="section-navy relative overflow-hidden py-24">
       <div className="section-padding relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -18,16 +13,17 @@ export default function AboutSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <motion.h2
-            // section-title class will handle theme-specific text color and shadow
-            className="section-title mb-16"
+          <motion.div
+            className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            About Me
-          </motion.h2>
+            <span className="eyebrow">Background</span>
+            <h2 className="section-title mb-5">About Me</h2>
+            <div className="blueprint-rule mx-auto" />
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start mb-16">
             {/* Left - Text content */}
@@ -69,6 +65,28 @@ export default function AboutSection() {
               </div>
             </motion.div>
           </div>
+
+          {/* Stats strip (AusUrban-style) */}
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-3 gap-px overflow-hidden rounded-xl border border-primary/25 bg-primary/20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            {[
+              { value: "3+", label: "Years Experience" },
+              { value: "3", label: "Specialisation Areas" },
+              { value: "QLD", label: "Brisbane, Australia" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-card px-6 py-8 text-center">
+                <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">{stat.value}</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>

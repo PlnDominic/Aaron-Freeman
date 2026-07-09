@@ -113,9 +113,9 @@ export default function ResumeSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
-            Credentials & Qualifications
-          </h2>
+          <span className="eyebrow">Credentials</span>
+          <h2 className="section-title mb-5">Credentials &amp; Qualifications</h2>
+          <div className="blueprint-rule mx-auto mb-6" />
           <p className="text-xl text-foreground/70 dark:text-foreground/60 max-w-3xl mx-auto">
             Professional resume and certified achievements showcasing expertise and qualifications in environmental planning and urban development.
           </p>

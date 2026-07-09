@@ -73,11 +73,6 @@ export default function ContactSection() {
       id="contact" 
       className={`${contactSectionBg} bg-gradient-to-b from-background/70 to-background`}
     >
-      {/* Themed Grid Overlay */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 cyber-grid"></div>
-      </div>
-
       <div className="section-padding relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -85,16 +80,18 @@ export default function ContactSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* Themed Section Title */}
-          <motion.h2
-            className="section-title mb-12"
+          {/* Section heading */}
+          <motion.div
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            Get In Touch
-          </motion.h2>
+            <span className="eyebrow">Contact</span>
+            <h2 className="section-title mb-5">Get In Touch</h2>
+            <div className="blueprint-rule mx-auto" />
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             {/* Left: Contact Info & Map Placeholder */}
