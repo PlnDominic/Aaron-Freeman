@@ -89,6 +89,33 @@
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+/* Fixed dark-navy "signature" band, independent of the light/dark mode toggle
+   (mirrors AusUrban's alternating light/navy sections). Every rule below that
+   reads --foreground, --light-text-primary, etc. picks these up automatically
+   via CSS variable cascade, regardless of the rule's own selector. */
+.section-navy {
+  --background: 205 52% 8%;
+  --foreground: 197 26% 95%;
+  --card: 207 52% 12%;
+  --card-foreground: 197 26% 95%;
+  --secondary: 205 30% 18%;
+  --secondary-foreground: 197 26% 92%;
+  --muted: 205 30% 16%;
+  --muted-foreground: 197 15% 65%;
+  --border: 205 30% 22%;
+  --input: 205 30% 22%;
+
+  --light-text-primary: 197 26% 95%;
+  --light-text-secondary: 197 15% 65%;
+  --light-card-bg: 207 52% 12%;
+  --light-card-border: 205 30% 22%;
+  --light-button-secondary-text: 31 60% 65%;
+  --light-button-secondary-border: 31 55% 55%;
+
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
 /* Base heading styles */
 .section-title {
   @apply text-3xl md:text-4xl font-bold mb-8 text-center;

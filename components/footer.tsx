@@ -6,17 +6,17 @@ import { MessageSquare } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="relative py-8 overflow-hidden">
+    <footer className="section-navy relative py-8 overflow-hidden">
       {/* Blurred background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent dark:from-black/40 backdrop-blur-md"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent backdrop-blur-md"></div>
 
       {/* Grid lines */}
       <div
         className="absolute inset-0 opacity-10"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 255, 255, 0.1) 1px, transparent 1px)
+            linear-gradient(to right, rgba(212, 154, 92, 0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(212, 154, 92, 0.15) 1px, transparent 1px)
           `,
           backgroundSize: "20px 20px",
         }}
