@@ -52,30 +52,6 @@ export default function HeroSection() {
       ref={heroRef}
       className="relative flex items-center justify-center min-h-screen overflow-hidden py-8 pt-16"
     >
-      {/* Particle Background - Themed particle color */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {particles.map((p) => (
-        <motion.div
-            key={p.id}
-            className="absolute rounded-full bg-primary/30 dark:bg-primary/20"
-          style={{
-              width: Math.random() * 3 + 1,
-              height: Math.random() * 3 + 1,
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              animationDelay: `${p.delay}s`,
-          }}
-            animate={{ y: [0, -20, 0], opacity: [0, 0.8, 0] }}
-          transition={{
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: p.delay
-          }}
-        />
-      ))}
-      </div>
-
       <div className="section-padding z-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left side - Text content */}
@@ -169,25 +145,17 @@ export default function HeroSection() {
             style={{ x: springX, y: springY }}
           >
             <motion.div
-              className="relative w-96 h-96 md:w-[28rem] md:h-[28rem] lg:w-[32rem] lg:h-[32rem]"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
+              className="relative w-80 h-[26rem] md:w-96 md:h-[32rem] lg:w-[26rem] lg:h-[34rem]"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1 }}
             >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/50 via-amber-600/50 to-amber-800/50 dark:from-amber-500/70 dark:via-amber-600/70 dark:to-amber-700/70 p-2 glow-effect">
-                <div className="relative w-full h-full rounded-full overflow-hidden bg-background">
-                  <Image src="/images/aaron.jpg" alt="Aaron Freeman" fill className="object-cover" priority />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
-                </div>
+              {/* thin gold corner accent */}
+              <div className="absolute -left-3 -top-3 h-16 w-16 border-l border-t border-[hsl(var(--gold))]" />
+              <div className="absolute -bottom-3 -right-3 h-16 w-16 border-b border-r border-[hsl(var(--gold))]" />
+              <div className="relative h-full w-full overflow-hidden border border-border bg-background">
+                <Image src="/images/aaron.jpg" alt="Aaron Freeman" fill className="object-cover grayscale" priority />
               </div>
-
-              {[...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute inset-0 border-2 rounded-full pulse-ring"
-                  style={{ animationDelay: `${i * 0.7}s` }}
-                />
-              ))}
             </motion.div>
           </motion.div>
         </div>

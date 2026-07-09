@@ -18,15 +18,15 @@ interface Project {
 }
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  "Urban & Environmental Projects": <MapPin className="w-5 h-5 text-primary" />,
-  "Environmental & Compliance Experience": <TreePine className="w-5 h-5 text-primary" />,
-  "Community & Volunteer Leadership": <Users className="w-5 h-5 text-primary" />
+  "Urban & Environmental Projects": <MapPin className="w-5 h-5 text-white" />,
+  "Environmental & Compliance Experience": <TreePine className="w-5 h-5 text-white" />,
+  "Community & Volunteer Leadership": <Users className="w-5 h-5 text-white" />
 }
 
 const categoryHeadingIcons: Record<string, React.ReactNode> = {
-  "Urban & Environmental Projects": <MapPin className="w-4 h-4 text-primary" />,
-  "Environmental & Compliance Experience": <TreePine className="w-4 h-4 text-primary" />,
-  "Community & Volunteer Leadership": <Users className="w-4 h-4 text-primary" />
+  "Urban & Environmental Projects": <MapPin className="w-4 h-4 text-foreground" />,
+  "Environmental & Compliance Experience": <TreePine className="w-4 h-4 text-foreground" />,
+  "Community & Volunteer Leadership": <Users className="w-4 h-4 text-foreground" />
 }
 
 const categories = ["All", "Urban & Environmental Projects", "Environmental & Compliance Experience", "Community & Volunteer Leadership"]
@@ -54,39 +54,21 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       onClick={handlePdfDownload}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_20px_45px_-15px_rgba(15,38,51,0.4)] ${
+      className={`group relative flex flex-col overflow-hidden border border-border bg-card transition-colors duration-200 hover:border-foreground ${
         hasPdf ? "cursor-pointer" : ""
       }`}
     >
-      {/* Blueprint header band */}
-      <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[hsl(205_52%_11%)] via-[hsl(205_50%_15%)] to-[hsl(202_42%_22%)]">
-        {/* fine blueprint grid */}
-        <div
-          className="absolute inset-0 opacity-[0.16]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(212,154,92,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(212,154,92,0.4) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-          }}
-        />
-        {/* soft gold glow */}
-        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-primary/20 blur-3xl" />
-
+      {/* Flat header band */}
+      <div className="relative h-40 overflow-hidden bg-neutral-950 border-b border-neutral-800">
         {/* category medallion */}
-        <div className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-xl border border-primary/40 bg-primary/15 backdrop-blur-sm">
+        <div className="absolute left-5 top-5 flex h-11 w-11 items-center justify-center border border-white/25">
           {categoryIcons[project.category]}
         </div>
 
-        {/* status pill */}
+        {/* status */}
         <div className="absolute right-5 top-5">
-          <span
-            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold ${
-              isCompleted
-                ? "border-primary/40 bg-primary/15 text-primary"
-                : "border-amber-300/40 bg-amber-400/15 text-amber-200"
-            }`}
-          >
-            <span className={`h-1.5 w-1.5 rounded-full ${isCompleted ? "bg-primary" : "bg-amber-300"}`} />
+          <span className="inline-flex items-center gap-2 border border-white/20 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white/85">
+            <span className={`h-1.5 w-1.5 ${isCompleted ? "bg-[hsl(var(--gold))]" : "bg-white/50"}`} />
             {project.status}
           </span>
         </div>
@@ -94,7 +76,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {/* PDF chip */}
         {hasPdf && (
           <div className="absolute bottom-4 left-5">
-            <span className="flex items-center gap-1.5 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur-sm">
+            <span className="flex items-center gap-1.5 border border-white/15 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white/85">
               <FileText className="h-3.5 w-3.5" />
               PDF Report
             </span>
@@ -103,14 +85,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col p-5">
-        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-400">
+      <div className="flex flex-1 flex-col p-6">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--gold))]">
           {project.category}
         </p>
         <h4 className="mb-2 text-lg font-bold leading-snug text-foreground line-clamp-2">
           {project.title}
         </h4>
-        <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+        <p className="mb-5 text-sm leading-relaxed text-muted-foreground line-clamp-3">
           {project.description}
         </p>
 
@@ -118,7 +100,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="mt-auto flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
           {project.location ? (
             <span className="flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-primary/70" />
+              <MapPin className="h-3.5 w-3.5" />
               {project.location}
             </span>
           ) : (
@@ -126,7 +108,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
           {project.year && (
             <span className="flex items-center gap-1.5">
-              <Calendar className="h-3.5 w-3.5 text-primary/70" />
+              <Calendar className="h-3.5 w-3.5" />
               {project.year}
             </span>
           )}
@@ -134,7 +116,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
         {/* CTA */}
         {hasPdf && (
-          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-amber-700 transition-all group-hover:gap-3 dark:text-amber-400">
+          <div className="mt-5 flex items-center gap-2 text-sm font-medium text-foreground transition-all group-hover:gap-3">
             View document
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
@@ -142,7 +124,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Hover accent bar */}
-      <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-primary to-amber-600 transition-transform duration-300 group-hover:scale-x-100" />
+      <div className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[hsl(var(--gold))] transition-transform duration-300 group-hover:scale-x-100" />
     </motion.article>
   )
 }
@@ -280,11 +262,11 @@ export default function ProjectsSection() {
                   className="space-y-6"
                 >
                   <div className="flex items-center gap-3 mb-6">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10">
+                    <span className="flex h-9 w-9 items-center justify-center border border-border">
                       {categoryHeadingIcons[categoryName]}
                     </span>
                     <h3 className="text-2xl font-bold text-foreground">{categoryName}</h3>
-                    <span className="ml-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                    <span className="ml-1 border border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                       {categoryProjects.length}
                     </span>
                     <span className="ml-2 hidden h-px flex-1 bg-border sm:block" />
