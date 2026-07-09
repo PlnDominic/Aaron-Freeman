@@ -29,7 +29,7 @@ const formSchema = z.object({
   }),
 })
 
-const contactSectionBg = "py-20 relative overflow-hidden"
+const contactSectionBg = "section-navy py-20 relative overflow-hidden"
 
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -71,7 +71,7 @@ export default function ContactSection() {
   return (
     <section 
       id="contact" 
-      className={`${contactSectionBg} bg-gradient-to-b from-background/70 to-background dark:from-gray-900/80 dark:to-black`}
+      className={`${contactSectionBg} bg-gradient-to-b from-background/70 to-background`}
     >
       {/* Themed Grid Overlay */}
       <div className="absolute inset-0 opacity-5">

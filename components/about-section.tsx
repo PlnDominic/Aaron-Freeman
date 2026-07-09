@@ -5,7 +5,7 @@ import Globe3D from "@/components/globe-3d"
 
 export default function AboutSection() {
   return (
-    <section id="about" className="about-section-bg">
+    <section id="about" className="section-navy relative overflow-hidden py-20">
       {/* Subtle grid for background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 cyber-grid"></div>
