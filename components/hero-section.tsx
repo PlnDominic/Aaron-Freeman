@@ -85,28 +85,36 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.3 }}
             className="text-left"
           >
+            <motion.div
+              className="flex items-center gap-3 mb-5"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <span className="h-px w-8 bg-primary" />
+              <span className="eyebrow mb-0">Urban &amp; Environmental Planner</span>
+            </motion.div>
+
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 neon-text"
+              className="text-5xl md:text-7xl lg:text-[5rem] font-bold leading-[1.03] tracking-tight mb-6 text-foreground"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
-                Aaron Freeman
-              </span>
+              Aaron Freeman
             </motion.h1>
 
             <motion.div
-              className="flex items-center gap-4 mb-6"
+              className="flex items-center gap-3 mb-6"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              <Building className="h-6 w-6 lucide-icon" />
-              <span className="text-xl md:text-2xl text-foreground/80 dark:text-foreground/70 font-medium">
-                Urban & Environmental Planner
+              <Building className="h-5 w-5 lucide-icon" />
+              <span className="text-lg md:text-xl text-foreground/70 dark:text-foreground/70 font-medium">
+                Sustainable cities, thoughtfully planned
               </span>
-              <Leaf className="h-6 w-6 text-amber-500 dark:text-amber-400" />
+              <Leaf className="h-5 w-5 text-amber-500 dark:text-amber-400" />
             </motion.div>
 
             <motion.p

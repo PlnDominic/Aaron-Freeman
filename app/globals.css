@@ -116,23 +116,40 @@
   color: hsl(var(--foreground));
 }
 
-/* Base heading styles */
+/* Base heading styles — refined, AusUrban-style layout (keeps the site's Inter typeface) */
 .section-title {
-  @apply text-3xl md:text-4xl font-bold mb-8 text-center;
-  color: hsl(var(--foreground)); /* Default */
-}
-.dark .section-title {
-   /* Example: specific color for dark theme titles if needed, otherwise inherits */
-  text-shadow: var(--dark-neon-text-shadow);
+  @apply text-4xl md:text-5xl font-bold tracking-tight mb-6 text-center;
+  color: hsl(var(--foreground));
 }
 html:not(.dark) .section-title {
   color: hsl(var(--light-text-primary));
-  text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+/* Uppercase gold eyebrow label sitting above a section title */
+.eyebrow {
+  @apply inline-block text-xs font-semibold uppercase mb-3;
+  letter-spacing: 0.16em;
+  color: hsl(var(--primary));
+}
+html:not(.dark) .eyebrow {
+  color: hsl(31 65% 42%); /* deeper gold for contrast on light backgrounds */
+}
+
+/* Thin gold "blueprint" rule used as a section divider accent */
+.blueprint-rule {
+  height: 1px;
+  width: 56px;
+  background-color: hsl(var(--primary));
+  border: 0;
+}
+.blueprint-rule.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-subtitle {
-  @apply text-xl md:text-2xl font-semibold mb-4;
-  color: hsl(var(--foreground)); /* Default */
+  @apply text-2xl md:text-3xl font-semibold mb-4;
+  color: hsl(var(--foreground));
 }
 html:not(.dark) .section-subtitle {
   color: hsl(var(--light-text-secondary));
@@ -191,19 +208,20 @@ html:not(.dark) .btn-secondary:hover {
   border-color: hsl(var(--light-button-secondary-border) / 0.7);
 }
 
-/* Neon Text & Glow Effects */
+/* Neon glow retired in favour of AusUrban's clean, flat treatment.
+   Classes kept as no-ops so existing markup stays valid. */
 .neon-text {
-  text-shadow: var(--dark-neon-text-shadow);
+  text-shadow: none;
 }
 html:not(.dark) .neon-text {
-  text-shadow: var(--light-neon-text-shadow);
+  text-shadow: none;
 }
 
 .glow-effect {
-  box-shadow: var(--dark-glow-effect);
+  box-shadow: 0 20px 45px -20px rgba(15, 38, 51, 0.35);
 }
 html:not(.dark) .glow-effect {
-  box-shadow: var(--light-glow-effect);
+  box-shadow: 0 20px 45px -22px rgba(15, 38, 51, 0.25);
 }
 
 /* Cyber Grid */

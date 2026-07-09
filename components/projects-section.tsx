@@ -224,17 +224,16 @@ export default function ProjectsSection() {
       <div className="section-padding relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <motion.p
-            className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400"
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            Portfolio
-          </motion.p>
+            <span className="eyebrow">Portfolio</span>
+          </motion.div>
           <motion.h2
-            className="section-title mb-6"
+            className="section-title mb-5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -242,6 +241,7 @@ export default function ProjectsSection() {
           >
             Featured Projects
           </motion.h2>
+          <div className="blueprint-rule mx-auto mb-8" />
           <motion.p
             className="text-lg text-foreground/70 mb-8 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { MessageSquare } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -34,13 +34,13 @@ export default function Footer() {
           <div className="flex items-center gap-2">
            <span>Developed by</span>
             <Link
-              href="https://wa.me/233542855399"
+              href="https://www.ecstasytechnologies.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1 group"
             >
-              Ecstasy Geospatial Services
-              <MessageSquare className="w-4 h-4 transform group-hover:scale-110 transition-transform" />
+              Ecstasy Technologies
+              <ExternalLink className="w-4 h-4 transform group-hover:scale-110 transition-transform" />
             </Link>
           </div>
         </motion.div>
