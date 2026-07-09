@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { MapPin, TreePine, Users, FileText, Calendar, ArrowUpRight } from "lucide-react"
 
@@ -246,6 +247,50 @@ export default function ProjectsSection() {
             ))}
           </div>
         </div>
+
+        {/* Selected work — featured imagery */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="mb-6 flex items-center gap-3">
+            <span className="eyebrow mb-0">Selected work</span>
+            <span className="hidden h-px flex-1 bg-border sm:block" />
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <figure className="border border-border">
+              <div className="relative aspect-[4/5] w-full overflow-hidden">
+                <Image
+                  src="/images/renovation-before-after.jpg"
+                  alt="Character home renewal, before and after"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+              </div>
+              <figcaption className="p-4 text-sm text-muted-foreground">
+                Character-home renewal — heritage frontage retained, amenity modernised. Brisbane.
+              </figcaption>
+            </figure>
+            <figure className="border border-border">
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-white">
+                <Image
+                  src="/images/site-plan.jpg"
+                  alt="Concept masterplan sketch"
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+              </div>
+              <figcaption className="p-4 text-sm text-muted-foreground">
+                Concept masterplan — mixed-use residential with landscaped setbacks.
+              </figcaption>
+            </figure>
+          </div>
+        </motion.div>
 
         {/* Projects Display */}
         {activeFilter === "All" ? (
