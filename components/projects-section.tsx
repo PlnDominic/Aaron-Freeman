@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download } from "lucide-react"
+import { MapPin, TreePine, Users, FileText, Calendar, ArrowUpRight } from "lucide-react"
 
 interface Project {
   id: string
@@ -19,6 +18,12 @@ interface Project {
 }
 
 const categoryIcons: Record<string, React.ReactNode> = {
+  "Urban & Environmental Projects": <MapPin className="w-5 h-5 text-primary" />,
+  "Environmental & Compliance Experience": <TreePine className="w-5 h-5 text-primary" />,
+  "Community & Volunteer Leadership": <Users className="w-5 h-5 text-primary" />
+}
+
+const categoryHeadingIcons: Record<string, React.ReactNode> = {
   "Urban & Environmental Projects": <MapPin className="w-4 h-4 text-primary" />,
   "Environmental & Compliance Experience": <TreePine className="w-4 h-4 text-primary" />,
   "Community & Volunteer Leadership": <Users className="w-4 h-4 text-primary" />
@@ -26,74 +31,119 @@ const categoryIcons: Record<string, React.ReactNode> = {
 
 const categories = ["All", "Urban & Environmental Projects", "Environmental & Compliance Experience", "Community & Volunteer Leadership"]
 
-// Overlapping positions for 5 cards (desktop, right-aligned vertical cascade with spacing and horizontal offset)
-const overlapStyles = [
-  "z-50 right-0 top-0 w-80 h-64",
-  "z-40 right-8 top-32 w-80 h-64",
-  "z-30 right-16 top-64 w-80 h-64",
-  "z-20 right-24 top-[18rem] w-80 h-64",
-  "z-10 right-32 top-[25rem] w-80 h-64",
-]
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const pdfUrl = project.pdfUrl || project.pdfFile
+  const hasPdf = Boolean(pdfUrl)
 
-function ProjectCard({ project, style, index }: { project: Project; style: string; index: number }) {
   const handlePdfDownload = () => {
-    // Use new cloud URL if available, fallback to old base64 data
-    const pdfUrl = project.pdfUrl || project.pdfFile
-    if (pdfUrl) {
-      const link = document.createElement('a')
-      link.href = pdfUrl
-      link.download = `${project.title}.pdf`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
+    if (!hasPdf) return
+    const link = document.createElement("a")
+    link.href = pdfUrl
+    link.download = `${project.title}.pdf`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
+  const isCompleted = project.status?.toLowerCase() === "completed"
+
   return (
-    <motion.div
-      className={`absolute ${style} rounded-2xl shadow-xl bg-card border border-border overflow-hidden group transition-all duration-500 cursor-pointer`}
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 0.1 * index, duration: 0.7, type: "spring" }}
-      title={project.title}
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
       onClick={handlePdfDownload}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_20px_45px_-15px_rgba(15,38,51,0.4)] ${
+        hasPdf ? "cursor-pointer" : ""
+      }`}
     >
-      <div className="relative w-full h-full">
-        {(project.pdfUrl || project.pdfFile) ? (
-          <div className="w-full h-full bg-gradient-to-br from-red-500 to-red-600 flex flex-col items-center justify-center group-hover:scale-105 transition-transform duration-500">
-            <FileText className="w-20 h-20 text-white mb-4" />
-            <div className="bg-red-700 text-white text-xs font-bold px-3 py-1 rounded-full">
-              PDF
-            </div>
-            <Download className="w-6 h-6 text-white/80 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-            {categoryIcons[project.category]}
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        
-        {/* Project info */}
-        <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2">{project.title}</h3>
-          {project.location && (
-            <p className="text-white/80 text-xs">{project.location}</p>
-          )}
-        </div>
-        
-        {/* Category badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-2 bg-card/90 dark:bg-card/60 backdrop-blur-sm rounded-full px-3 py-1 border border-primary/30 shadow">
+      {/* Blueprint header band */}
+      <div className="relative h-44 overflow-hidden bg-gradient-to-br from-[hsl(205_52%_11%)] via-[hsl(205_50%_15%)] to-[hsl(202_42%_22%)]">
+        {/* fine blueprint grid */}
+        <div
+          className="absolute inset-0 opacity-[0.16]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(212,154,92,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(212,154,92,0.4) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        />
+        {/* soft gold glow */}
+        <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-primary/20 blur-3xl" />
+
+        {/* category medallion */}
+        <div className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-xl border border-primary/40 bg-primary/15 backdrop-blur-sm">
           {categoryIcons[project.category]}
-          <span className="text-xs font-medium text-foreground/90 dark:text-foreground/80">{project.category}</span>
         </div>
 
-        {/* Status badge */}
-        <div className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm rounded-full px-2 py-1">
-          <span className="text-xs font-medium text-primary-foreground">{project.status}</span>
+        {/* status pill */}
+        <div className="absolute right-5 top-5">
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold ${
+              isCompleted
+                ? "border-primary/40 bg-primary/15 text-primary"
+                : "border-amber-300/40 bg-amber-400/15 text-amber-200"
+            }`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${isCompleted ? "bg-primary" : "bg-amber-300"}`} />
+            {project.status}
+          </span>
         </div>
+
+        {/* PDF chip */}
+        {hasPdf && (
+          <div className="absolute bottom-4 left-5">
+            <span className="flex items-center gap-1.5 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 backdrop-blur-sm">
+              <FileText className="h-3.5 w-3.5" />
+              PDF Report
+            </span>
+          </div>
+        )}
       </div>
-    </motion.div>
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col p-5">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-400">
+          {project.category}
+        </p>
+        <h4 className="mb-2 text-lg font-bold leading-snug text-foreground line-clamp-2">
+          {project.title}
+        </h4>
+        <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+          {project.description}
+        </p>
+
+        {/* Meta row */}
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
+          {project.location ? (
+            <span className="flex items-center gap-1.5">
+              <MapPin className="h-3.5 w-3.5 text-primary/70" />
+              {project.location}
+            </span>
+          ) : (
+            <span />
+          )}
+          {project.year && (
+            <span className="flex items-center gap-1.5">
+              <Calendar className="h-3.5 w-3.5 text-primary/70" />
+              {project.year}
+            </span>
+          )}
+        </div>
+
+        {/* CTA */}
+        {hasPdf && (
+          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-amber-700 transition-all group-hover:gap-3 dark:text-amber-400">
+            View document
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
+        )}
+      </div>
+
+      {/* Hover accent bar */}
+      <div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-primary to-amber-600 transition-transform duration-300 group-hover:scale-x-100" />
+    </motion.article>
   )
 }
 
@@ -174,6 +224,15 @@ export default function ProjectsSection() {
       <div className="section-padding relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
+          <motion.p
+            className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Portfolio
+          </motion.p>
           <motion.h2
             className="section-title mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -193,16 +252,12 @@ export default function ProjectsSection() {
             Explore my comprehensive portfolio of urban and environmental planning projects, organized by specialization areas. Each PDF document contains detailed project analysis, methodologies, and outcomes.
           </motion.p>
           <div className="flex flex-wrap gap-3 justify-center mb-8">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <Button
                 key={category}
                 variant={activeFilter === category ? "default" : "outline"}
                 onClick={() => setActiveFilter(category)}
-                className={
-                  activeFilter === category
-                    ? "btn-primary"
-                    : "btn-secondary"
-                }
+                className={activeFilter === category ? "btn-primary" : "btn-secondary"}
               >
                 {category}
               </Button>
@@ -225,47 +280,18 @@ export default function ProjectsSection() {
                   className="space-y-6"
                 >
                   <div className="flex items-center gap-3 mb-6">
-                    {categoryIcons[categoryName]}
+                    <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-primary/30 bg-primary/10">
+                      {categoryHeadingIcons[categoryName]}
+                    </span>
                     <h3 className="text-2xl font-bold text-foreground">{categoryName}</h3>
+                    <span className="ml-1 rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+                      {categoryProjects.length}
+                    </span>
+                    <span className="ml-2 hidden h-px flex-1 bg-border sm:block" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categoryProjects.map((project, index) => (
-                      <motion.div
-                        key={project.id}
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        className="group cursor-pointer"
-                        onClick={() => {
-                          if (project.pdfFile) {
-                            const link = document.createElement('a')
-                            link.href = project.pdfFile
-                            link.download = `${project.title}.pdf`
-                            document.body.appendChild(link)
-                            link.click()
-                            document.body.removeChild(link)
-                          }
-                        }}
-                      >
-                        <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                          <div className="relative h-48 bg-gradient-to-br from-red-500 to-red-600 flex flex-col items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            <FileText className="w-16 h-16 text-white mb-3" />
-                            <div className="bg-red-700 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">
-                              PDF
-                            </div>
-                            <Download className="w-5 h-5 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <div className="p-4">
-                            <h4 className="font-semibold text-lg mb-2 line-clamp-2">{project.title}</h4>
-                            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
-                            <div className="flex items-center justify-between text-xs text-muted-foreground">
-                              <span>{project.location}</span>
-                              <span>{project.year}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
+                      <ProjectCard key={project.id} project={project} index={index} />
                     ))}
                   </div>
                 </motion.div>
@@ -276,42 +302,7 @@ export default function ProjectsSection() {
           // Show filtered projects
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group cursor-pointer"
-                onClick={() => {
-                  if (project.pdfFile) {
-                    const link = document.createElement('a')
-                    link.href = project.pdfFile
-                    link.download = `${project.title}.pdf`
-                    document.body.appendChild(link)
-                    link.click()
-                    document.body.removeChild(link)
-                  }
-                }}
-              >
-                <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                  <div className="relative h-48 bg-gradient-to-br from-red-500 to-red-600 flex flex-col items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    <FileText className="w-16 h-16 text-white mb-3" />
-                    <div className="bg-red-700 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">
-                      PDF
-                    </div>
-                    <Download className="w-5 h-5 text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-semibold text-lg mb-2 line-clamp-2">{project.title}</h4>
-                    <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{project.location}</span>
-                      <span>{project.year}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         )}
