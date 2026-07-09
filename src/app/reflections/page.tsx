@@ -103,7 +103,7 @@ export default function ReflectionsPage() {
                   </div>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-green-600 to-green-800 dark:from-green-400 dark:via-green-500 dark:to-green-600">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
                   {selectedPost.title}
                 </h1>
 
@@ -129,7 +129,7 @@ export default function ReflectionsPage() {
               <footer className="mt-12 pt-8 border-t border-border">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-amber-600 rounded-full flex items-center justify-center text-white font-bold">
                       AF
                     </div>
                     <div>
@@ -169,7 +169,7 @@ export default function ReflectionsPage() {
               </Button>
             </Link>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-green-600 to-green-800 dark:from-green-400 dark:via-green-500 dark:to-green-600">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
               Reflections & Insights
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">

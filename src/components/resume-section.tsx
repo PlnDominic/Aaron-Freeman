@@ -113,7 +113,7 @@ export default function ResumeSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-green-600 to-green-800 dark:from-green-400 dark:via-green-500 dark:to-green-600">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
             Credentials & Qualifications
           </h2>
           <p className="text-xl text-foreground/70 dark:text-foreground/60 max-w-3xl mx-auto">
@@ -188,7 +188,7 @@ export default function ResumeSection() {
                       <Button 
                         onClick={handleResumeDownload}
                         size="lg"
-                        className="w-full bg-gradient-to-r from-primary to-green-600 hover:from-primary/90 hover:to-green-600/90 text-white font-semibold py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                        className="w-full bg-gradient-to-r from-primary to-amber-600 hover:from-primary/90 hover:to-amber-600/90 text-white font-semibold py-6 text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
                       >
                         <Download className="w-6 h-6 mr-3" />
                         Download Resume

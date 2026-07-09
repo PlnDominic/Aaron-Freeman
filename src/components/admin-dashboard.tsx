@@ -565,12 +565,12 @@ export default function AdminDashboard() {
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black">
-      <div className="absolute inset-4 bg-gradient-to-br from-slate-950 via-gray-900 to-black border-2 border-cyan-400/50 rounded-2xl shadow-2xl shadow-cyan-500/30 overflow-hidden">
+      <div className="absolute inset-4 bg-gradient-to-br from-slate-950 via-gray-900 to-black border-2 border-amber-400/50 rounded-2xl shadow-2xl shadow-amber-500/30 overflow-hidden">
         {/* Matrix-style digital grid background */}
         <div className="absolute inset-0 opacity-20">
           <div className="w-full h-full" style={{
             backgroundImage: `
-              linear-gradient(cyan 1px, transparent 1px),
+              linear-gradient(#d49a5c 1px, transparent 1px),
               linear-gradient(90deg, cyan 1px, transparent 1px)
             `,
             backgroundSize: '50px 50px'
@@ -581,7 +581,7 @@ export default function AdminDashboard() {
         <div className="absolute inset-0 overflow-hidden">
           {/* Horizontal lines */}
           <motion.div
-            className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+            className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"
             animate={{
               opacity: [0.3, 1, 0.3],
               scaleX: [0.5, 1, 0.5]
@@ -608,7 +608,7 @@ export default function AdminDashboard() {
           
           {/* Vertical lines */}
           <motion.div
-            className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-emerald-400 to-transparent"
+            className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"
             animate={{
               opacity: [0.3, 1, 0.3],
               scaleY: [0.5, 1, 0.5]
@@ -636,7 +636,7 @@ export default function AdminDashboard() {
           
           {/* Corner circuit nodes */}
           <motion.div
-            className="absolute top-8 left-8 w-4 h-4 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
+            className="absolute top-8 left-8 w-4 h-4 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50"
             animate={{
               scale: [1, 1.5, 1],
               opacity: [0.5, 1, 0.5]
@@ -661,7 +661,7 @@ export default function AdminDashboard() {
             }}
           />
           <motion.div
-            className="absolute bottom-8 left-8 w-4 h-4 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/50"
+            className="absolute bottom-8 left-8 w-4 h-4 bg-amber-400 rounded-full shadow-lg shadow-amber-400/50"
             animate={{
               scale: [1, 1.5, 1],
               opacity: [0.5, 1, 0.5]
@@ -689,7 +689,7 @@ export default function AdminDashboard() {
           
           {/* Flowing data particles */}
           <motion.div
-            className="absolute top-1/2 left-0 w-2 h-2 bg-cyan-300 rounded-full shadow-sm"
+            className="absolute top-1/2 left-0 w-2 h-2 bg-amber-300 rounded-full shadow-sm"
             animate={{
               x: [0, window.innerWidth || 1200, 0],
               opacity: [0, 1, 0]
@@ -723,14 +723,14 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-4">
               <motion.div
-                className="p-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl shadow-lg shadow-cyan-500/25"
+                className="p-3 bg-gradient-to-r from-amber-500 to-blue-600 rounded-xl shadow-lg shadow-amber-500/25"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Shield className="w-8 h-8 text-white" />
               </motion.div>
               <div>
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-amber-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                   Neural Command Center
                 </h2>
                 <p className="text-slate-400 text-sm">Advanced Portfolio Management System</p>
@@ -743,7 +743,7 @@ export default function AdminDashboard() {
               <Button
                 variant="outline"
                 onClick={() => setIsVisible(false)}
-                className="gap-2 bg-slate-800/50 border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/50 backdrop-blur-sm"
+                className="gap-2 bg-slate-800/50 border-amber-500/30 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400/50 backdrop-blur-sm"
               >
                 <EyeOff className="h-4 w-4" />
                 Deactivate
@@ -752,10 +752,10 @@ export default function AdminDashboard() {
           </motion.div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-slate-900/90 to-slate-800/90 border border-cyan-500/30 rounded-xl p-1 backdrop-blur-md mb-8">
+            <TabsList className="grid w-full grid-cols-4 bg-gradient-to-r from-slate-900/90 to-slate-800/90 border border-amber-500/30 rounded-xl p-1 backdrop-blur-md mb-8">
               <TabsTrigger 
                 value="blog" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-cyan-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
+                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-amber-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
               >
                 <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
                   <Cpu className="w-4 h-4" />
@@ -764,7 +764,7 @@ export default function AdminDashboard() {
               </TabsTrigger>
               <TabsTrigger 
                 value="projects" 
-                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
+                className="text-sm font-medium rounded-lg transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-amber-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-amber-500/25 hover:bg-white/10 text-gray-300 hover:text-white"
               >
                 <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
                   <Zap className="w-4 h-4" />

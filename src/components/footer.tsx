@@ -37,7 +37,7 @@ export default function Footer() {
               href="https://wa.me/233542855399"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1 group"
+              className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-1 group"
             >
               Ecstasy Geospatial Services
               <MessageSquare className="w-4 h-4 transform group-hover:scale-110 transition-transform" />

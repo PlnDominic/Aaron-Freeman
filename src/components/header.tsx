@@ -36,7 +36,7 @@ export default function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-lg shadow-green-500/10"
+          ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-lg shadow-amber-500/10"
           : "bg-transparent"
       }`}
     >
@@ -45,7 +45,7 @@ export default function Header() {
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="text-xl font-bold text-green-600 hover:text-green-700 transition-colors"
+              className="text-xl font-bold text-amber-600 hover:text-amber-700 transition-colors"
             >
               Aaron Freeman
             </Link>
@@ -57,10 +57,10 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300 relative group"
+                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-300 relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-green-500 to-green-700 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-amber-700 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
             <ThemeToggle />
@@ -74,7 +74,7 @@ export default function Header() {
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
-              className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400"
+              className="text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
@@ -91,7 +91,7 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                  className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-300"
+                  className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}

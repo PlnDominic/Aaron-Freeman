@@ -91,7 +91,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-green-600 to-green-800 dark:from-green-400 dark:via-green-500 dark:to-green-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-amber-600 to-amber-800 dark:from-amber-400 dark:via-amber-500 dark:to-amber-600">
                 Aaron Freeman
               </span>
             </motion.h1>
@@ -106,7 +106,7 @@ export default function HeroSection() {
               <span className="text-xl md:text-2xl text-foreground/80 dark:text-foreground/70 font-medium">
                 Urban & Environmental Planner
               </span>
-              <Leaf className="h-6 w-6 text-green-500 dark:text-green-400" />
+              <Leaf className="h-6 w-6 text-amber-500 dark:text-amber-400" />
             </motion.div>
 
             <motion.p
@@ -166,7 +166,7 @@ export default function HeroSection() {
               animate={{ scale: 1, rotate: 0 }}
               transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
             >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/50 via-green-600/50 to-green-800/50 dark:from-green-500/70 dark:via-green-600/70 dark:to-green-700/70 p-2 glow-effect">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/50 via-amber-600/50 to-amber-800/50 dark:from-amber-500/70 dark:via-amber-600/70 dark:to-amber-700/70 p-2 glow-effect">
                 <div className="relative w-full h-full rounded-full overflow-hidden bg-background">
                   <Image src="/images/aaron.jpg" alt="Aaron Freeman" fill className="object-cover" priority />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
