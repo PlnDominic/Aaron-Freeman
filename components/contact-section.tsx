@@ -48,22 +48,31 @@ export default function ContactSection() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      console.log("Form data submitted:", values)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong. Please try again.")
+      }
+
       toast({
         title: "Message Sent!",
         description: "Thanks for reaching out. I'll get back to you soon!",
         variant: "default",
       })
-    form.reset()
+      form.reset()
     } catch (error) {
       console.error("Submission error:", error)
-    toast({
+      toast({
         title: "Submission Error",
-        description: "Something went wrong. Please try again.",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
         variant: "destructive",
-    })
+      })
     } finally {
       setIsSubmitting(false)
     }
