@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Edit, Plus, Trash2, Eye, EyeOff, Upload, Image as ImageIcon, Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download, Award, Shield, Sparkles, Cpu, Database, Globe, ChevronUp, ChevronDown, Heading, Type } from "lucide-react"
+import { Edit, Plus, Trash2, Eye, EyeOff, Upload, Image as ImageIcon, Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download, Award, Shield, Sparkles, Cpu, Database, Globe, ChevronUp, ChevronDown, Heading, Type, Home, Building2, Landmark, HeartHandshake } from "lucide-react"
 
 type ContentBlock =
   | { id: string; type: "heading"; text: string }
@@ -62,13 +62,23 @@ interface Certificate {
   dateIssued: string
 }
 
-const projectCategories = ["Urban & Environmental Projects", "Environmental & Compliance Experience", "Community & Volunteer Leadership"]
+const projectCategories = [
+  "Residential Development",
+  "Mixed-Use Development",
+  "Character and Heritage",
+  "Environmental Management",
+  "Stakeholder Engagement",
+  "Community Leadership"
+]
 const projectStatuses = ["Completed", "In Progress", "Planning", "Concept"]
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  "Urban & Environmental Projects": <MapPin className="w-4 h-4 text-primary" />,
-  "Environmental & Compliance Experience": <TreePine className="w-4 h-4 text-primary" />,
-  "Community & Volunteer Leadership": <Users className="w-4 h-4 text-primary" />
+  "Residential Development": <Home className="w-4 h-4 text-primary" />,
+  "Mixed-Use Development": <Building2 className="w-4 h-4 text-primary" />,
+  "Character and Heritage": <Landmark className="w-4 h-4 text-primary" />,
+  "Environmental Management": <Leaf className="w-4 h-4 text-primary" />,
+  "Stakeholder Engagement": <Users className="w-4 h-4 text-primary" />,
+  "Community Leadership": <HeartHandshake className="w-4 h-4 text-primary" />
 }
 
 export default function AdminDashboard() {

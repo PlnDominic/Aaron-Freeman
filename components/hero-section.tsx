@@ -68,7 +68,7 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <span className="h-px w-8 bg-primary" />
-              <span className="eyebrow mb-0">Urban &amp; Environmental Planner</span>
+              <span className="eyebrow mb-0">Town Planner | Development Assessment | Environmental Professional | Community Leader</span>
             </motion.div>
 
             <motion.h1
@@ -88,7 +88,7 @@ export default function HeroSection() {
             >
               <Building className="h-5 w-5 lucide-icon" />
               <span className="text-lg md:text-xl text-foreground/70 dark:text-foreground/70 font-medium">
-                Sustainable cities, thoughtfully planned
+                Planning Better Communities Through Practical Solutions
               </span>
               <Leaf className="h-5 w-5 text-amber-500 dark:text-amber-400" />
             </motion.div>
@@ -99,7 +99,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
             >
-              Designing sustainable cities of tomorrow through innovative urban planning and environmental solutions
+              Statutory Town Planner delivering practical planning advice, development assessment and environmental solutions that create lasting value for communities across Queensland.
             </motion.p>
 
             <motion.div

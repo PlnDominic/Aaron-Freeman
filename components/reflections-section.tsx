@@ -102,7 +102,7 @@ export default function ReflectionsSection() {
           <h2 className="section-title mb-5">Reflections &amp; Insights</h2>
           <div className="blueprint-rule mx-auto mb-6" />
           <p className="text-xl text-foreground/70 dark:text-foreground/60 max-w-3xl mx-auto">
-            Thoughts and perspectives on urban planning, sustainability, and creating better cities for tomorrow
+            Reflections on planning practice, professional growth, innovation and the future of planning.
           </p>
         </motion.div>
 

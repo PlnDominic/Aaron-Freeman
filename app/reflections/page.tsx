@@ -173,7 +173,7 @@ export default function ReflectionsPage() {
                     </div>
                     <div>
                       <p className="font-semibold">Aaron Freeman</p>
-                      <p className="text-sm text-muted-foreground">Urban & Environmental Planner</p>
+                      <p className="text-sm text-muted-foreground">Town Planner</p>
                     </div>
                   </div>
                   
@@ -212,7 +212,7 @@ export default function ReflectionsPage() {
               Reflections & Insights
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Explore all thoughts and perspectives on urban planning, sustainability, and creating better cities for tomorrow
+              Reflections on planning practice, professional growth, innovation and the future of planning.
             </p>
           </div>
 
