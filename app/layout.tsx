@@ -9,8 +9,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
-  title: "Aaron Freeman - Urban & Environmental Planner",
-  description: "Portfolio of Aaron Freeman, showcasing urban planning and environmental projects.",
+  title: "Aaron Freeman - Town Planner & Development Assessment",
+  description: "Portfolio of Aaron Freeman, a Statutory Town Planner delivering practical planning advice, development assessment and environmental solutions across Queensland.",
 }
 
 export default function RootLayout({
