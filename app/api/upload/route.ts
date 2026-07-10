@@ -3,9 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return NextResponse.json(
+        {
+          error:
+            'File uploads are not configured: BLOB_READ_WRITE_TOKEN is missing. In the Vercel dashboard, go to Storage, create (or select) a Blob store, connect it to this project, then redeploy.',
+        },
+        { status: 500 }
+      );
+    }
+
     const body = await request.formData();
     const file = body.get('file') as File;
-    
+
     if (!file) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
     }
@@ -39,6 +49,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Upload failed';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-} 
+}
