@@ -30,7 +30,7 @@ export default function Footer() {
           transition={{ duration: 0.8 }}
           className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400"
         >
-          <p>© 2025 Aaron Freeman. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Aaron Freeman. All rights reserved.</p>
           <div className="flex items-center gap-2">
            <span>Developed by</span>
             <Link
