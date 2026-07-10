@@ -1,18 +1,8 @@
-import { put } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
+import { getSupabaseClient, STORAGE_BUCKET } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      return NextResponse.json(
-        {
-          error:
-            'File uploads are not configured: BLOB_READ_WRITE_TOKEN is missing. In the Vercel dashboard, go to Storage, create (or select) a Blob store, connect it to this project, then redeploy.',
-        },
-        { status: 500 }
-      );
-    }
-
     const body = await request.formData();
     const file = body.get('file') as File;
 
@@ -23,26 +13,37 @@ export async function POST(request: NextRequest) {
     // Validate file size based on type
     const isImage = file.type.startsWith('image/');
     const isPDF = file.type === 'application/pdf';
-    
+
     if (isImage && file.size > 10 * 1024 * 1024) { // 10MB for images
       return NextResponse.json({ error: 'Image files must be under 10MB' }, { status: 400 });
     }
-    
+
     if (isPDF && file.size > 20 * 1024 * 1024) { // 20MB for PDFs
       return NextResponse.json({ error: 'PDF files must be under 20MB' }, { status: 400 });
     }
 
+    const supabase = getSupabaseClient();
+
     // Generate unique filename with timestamp
     const filename = `${Date.now()}-${file.name}`;
-    
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-    });
+    const bytes = Buffer.from(await file.arrayBuffer());
 
-    return NextResponse.json({ 
-      url: blob.url,
-      downloadUrl: blob.downloadUrl,
+    const { error: uploadError } = await supabase.storage
+      .from(STORAGE_BUCKET)
+      .upload(filename, bytes, {
+        contentType: file.type,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(filename);
+
+    return NextResponse.json({
+      url: data.publicUrl,
+      downloadUrl: data.publicUrl,
       filename: filename,
       size: file.size,
       type: file.type
