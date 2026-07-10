@@ -7,57 +7,32 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, ArrowLeft, User } from "lucide-react"
-
-type ContentBlock =
-  | { id: string; type: "heading"; text: string }
-  | { id: string; type: "paragraph"; text: string }
-  | { id: string; type: "image"; url: string; caption: string }
-
-interface BlogPost {
-  id: string
-  title: string
-  excerpt: string
-  content: string
-  blocks?: ContentBlock[]
-  date: string
-  readTime: string
-  tags: string[]
-  image?: string
-}
+import { type BlogPost, listPosts } from "@/lib/posts"
 
 export default function ReflectionsPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
 
   useEffect(() => {
-    // Load posts from localStorage
-    const savedPosts = localStorage.getItem('blogPosts')
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts))
+    const loadPosts = () => {
+      listPosts()
+        .then((allPosts) => {
+          setPosts(allPosts)
+
+          const postId = new URLSearchParams(window.location.search).get('id')
+          if (postId) {
+            const post = allPosts.find((p) => p.id === postId)
+            if (post) setSelectedPost(post)
+          }
+        })
+        .catch((error) => console.error('Error loading posts:', error))
     }
 
-    // Check if there's a specific post ID in the URL
-    const urlParams = new URLSearchParams(window.location.search)
-    const postId = urlParams.get('id')
-    
-    if (postId && savedPosts) {
-      const allPosts = JSON.parse(savedPosts)
-      const post = allPosts.find((p: BlogPost) => p.id === postId)
-      if (post) {
-        setSelectedPost(post)
-      }
-    }
+    loadPosts()
 
-    // Listen for updates
-    const handlePostsUpdate = () => {
-      const updatedPosts = localStorage.getItem('blogPosts')
-      if (updatedPosts) {
-        setPosts(JSON.parse(updatedPosts))
-      }
-    }
-
-    window.addEventListener('postsUpdated', handlePostsUpdate)
-    return () => window.removeEventListener('postsUpdated', handlePostsUpdate)
+    // Refetch when the admin panel creates/edits/deletes a post in the same tab
+    window.addEventListener('postsUpdated', loadPosts)
+    return () => window.removeEventListener('postsUpdated', loadPosts)
   }, [])
 
   if (selectedPost) {

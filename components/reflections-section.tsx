@@ -7,85 +7,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, ArrowRight } from "lucide-react"
-
-interface BlogPost {
-  id: string
-  title: string
-  excerpt: string
-  content: string
-  date: string
-  readTime: string
-  tags: string[]
-  image?: string
-}
+import { type BlogPost, listPosts } from "@/lib/posts"
 
 export default function ReflectionsSection() {
   const [posts, setPosts] = useState<BlogPost[]>([])
 
   useEffect(() => {
-    // Load posts from localStorage or use default posts
-    const savedPosts = localStorage.getItem('blogPosts')
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts))
-    } else {
-      // Default posts for demonstration
-      const defaultPosts: BlogPost[] = [
-        {
-          id: "1",
-          title: "The Future of Sustainable Urban Development",
-          excerpt: "Exploring innovative approaches to create cities that balance economic growth with environmental stewardship.",
-          content: "Urban development in the 21st century requires a fundamental shift in how we approach city planning.",
-          date: "2024-01-15",
-          readTime: "5 min read",
-          tags: ["Urban Planning", "Sustainability", "Environment"]
-        },
-        {
-          id: "2",
-          title: "Green Infrastructure: Nature's Solution to Urban Challenges",
-          excerpt: "How incorporating natural systems into city design can address multiple urban challenges simultaneously.",
-          content: "Green infrastructure represents a paradigm shift in urban planning, where nature-based solutions are integrated.",
-          date: "2024-01-08",
-          readTime: "4 min read",
-          tags: ["Green Infrastructure", "Climate Resilience", "Urban Design"]
-        },
-        {
-          id: "3",
-          title: "Community-Centered Planning: Building Cities for People",
-          excerpt: "The importance of involving local communities in the urban planning process to create truly livable spaces.",
-          content: "Successful urban planning must put people at the center of every decision, ensuring that development serves the community.",
-          date: "2024-01-01",
-          readTime: "3 min read",
-          tags: ["Community Planning", "Social Equity", "Public Participation"]
-        }
-      ]
-      setPosts(defaultPosts)
-      localStorage.setItem('blogPosts', JSON.stringify(defaultPosts))
+    const loadPosts = () => {
+      listPosts()
+        .then(setPosts)
+        .catch((error) => console.error('Error loading posts:', error))
     }
 
-    // Listen for storage changes to update posts when admin makes changes
-    const handleStorageChange = () => {
-      const updatedPosts = localStorage.getItem('blogPosts')
-      if (updatedPosts) {
-        setPosts(JSON.parse(updatedPosts))
-      }
-    }
+    loadPosts()
 
-    window.addEventListener('storage', handleStorageChange)
-    
-    // Custom event for same-page updates
-    const handlePostsUpdate = () => {
-      const updatedPosts = localStorage.getItem('blogPosts')
-      if (updatedPosts) {
-        setPosts(JSON.parse(updatedPosts))
-      }
-    }
-
-    window.addEventListener('postsUpdated', handlePostsUpdate)
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange)
-      window.removeEventListener('postsUpdated', handlePostsUpdate)
-    }
+    // Refetch when the admin panel creates/edits/deletes a post in the same tab
+    window.addEventListener('postsUpdated', loadPosts)
+    return () => window.removeEventListener('postsUpdated', loadPosts)
   }, [])
 
   return (
@@ -105,6 +43,12 @@ export default function ReflectionsSection() {
             Reflections on planning practice, professional growth, innovation and the future of planning.
           </p>
         </motion.div>
+
+        {posts.length === 0 && (
+          <div className="mx-auto max-w-xl border border-dashed border-border py-16 text-center text-sm text-muted-foreground">
+            No reflections published yet. Check back soon.
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (

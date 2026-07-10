@@ -12,23 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Edit, Plus, Trash2, Eye, EyeOff, Upload, Image as ImageIcon, Building, Leaf, Zap, MapPin, TreePine, Users, FileText, Download, Award, Shield, Sparkles, Cpu, Database, Globe, ChevronUp, ChevronDown, Heading, Type, Home, Building2, Landmark, HeartHandshake } from "lucide-react"
-
-type ContentBlock =
-  | { id: string; type: "heading"; text: string }
-  | { id: string; type: "paragraph"; text: string }
-  | { id: string; type: "image"; url: string; caption: string }
-
-interface BlogPost {
-  id: string
-  title: string
-  excerpt: string
-  content: string
-  blocks?: ContentBlock[]
-  date: string
-  readTime: string
-  tags: string[]
-  image?: string
-}
+import { type ContentBlock, type BlogPost, listPosts, createPost, updatePost, deletePost } from "@/lib/posts"
 
 interface Project {
   id: string
@@ -142,11 +126,10 @@ export default function AdminDashboard() {
 
   // Load data from localStorage
   useEffect(() => {
-    // Load blog posts
-    const savedPosts = localStorage.getItem('blogPosts')
-    if (savedPosts) {
-      setPosts(JSON.parse(savedPosts))
-    }
+    // Load blog posts from Supabase
+    listPosts()
+      .then(setPosts)
+      .catch((error) => console.error('Error loading posts:', error))
 
     // Load projects
     const savedProjects = localStorage.getItem('featuredProjects')
@@ -183,13 +166,6 @@ export default function AdminDashboard() {
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
   }, [secretKeySequence])
-
-  // Save blog posts with quota handling
-  const savePosts = (newPosts: BlogPost[]) => {
-    const savedData = saveToLocalStorage('blogPosts', newPosts)
-    setPosts(savedData)
-    window.dispatchEvent(new Event('postsUpdated'))
-  }
 
   // Simple localStorage save function (files now stored in cloud)
   const saveToLocalStorage = (key: string, data: any) => {
@@ -261,7 +237,7 @@ export default function AdminDashboard() {
     }
     setUploadingBlockId(id)
     try {
-      const uploadResult = await uploadToVercelBlob(file)
+      const uploadResult = await uploadFile(file)
       updateBlock(id, { url: uploadResult.url })
     } catch (error) {
       console.error("Error uploading section image:", error)
@@ -288,7 +264,7 @@ export default function AdminDashboard() {
 
     if (selectedBlogImage) {
       try {
-        const uploadResult = await uploadToVercelBlob(selectedBlogImage)
+        const uploadResult = await uploadFile(selectedBlogImage)
         imageUrl = uploadResult.url
       } catch (error) {
         console.error("Error uploading blog image:", error)
@@ -299,8 +275,7 @@ export default function AdminDashboard() {
 
     const wordCount = contentText.split(/\s+/).filter(Boolean).length
 
-    const newPost: BlogPost = {
-      id: editingPost ? editingPost.id : Date.now().toString(),
+    const postData = {
       title: blogFormData.title,
       excerpt: blogFormData.excerpt,
       content: contentText,
@@ -311,14 +286,21 @@ export default function AdminDashboard() {
       image: imageUrl
     }
 
-    let updatedPosts
-    if (editingPost) {
-      updatedPosts = posts.map(post => post.id === editingPost.id ? newPost : post)
-    } else {
-      updatedPosts = [newPost, ...posts]
+    try {
+      const savedPost = editingPost
+        ? await updatePost(editingPost.id, postData)
+        : await createPost(postData)
+
+      setPosts(editingPost
+        ? posts.map(post => post.id === savedPost.id ? savedPost : post)
+        : [savedPost, ...posts])
+      window.dispatchEvent(new Event('postsUpdated'))
+    } catch (error) {
+      console.error('Error saving post:', error)
+      alert(`Failed to save post: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      return
     }
 
-    savePosts(updatedPosts)
     setBlogFormData({ title: "", excerpt: "", content: "", tags: "", image: "", blocks: [] })
     setSelectedBlogImage(null)
     setEditingPost(null)
@@ -349,9 +331,15 @@ export default function AdminDashboard() {
     setBlogDialogOpen(true)
   }
 
-  const handleDeletePost = (postId: string) => {
-    const updatedPosts = posts.filter(post => post.id !== postId)
-    savePosts(updatedPosts)
+  const handleDeletePost = async (postId: string) => {
+    try {
+      await deletePost(postId)
+      setPosts(posts.filter(post => post.id !== postId))
+      window.dispatchEvent(new Event('postsUpdated'))
+    } catch (error) {
+      console.error('Error deleting post:', error)
+      alert(`Failed to delete post: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
   }
 
   const handleBlogImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -401,7 +389,7 @@ export default function AdminDashboard() {
   }
 
   // Upload file to Vercel Blob
-  const uploadToVercelBlob = async (file: File): Promise<{ url: string; downloadUrl: string }> => {
+  const uploadFile = async (file: File): Promise<{ url: string; downloadUrl: string }> => {
     const formData = new FormData()
     formData.append('file', file)
 
@@ -427,7 +415,7 @@ export default function AdminDashboard() {
     if (selectedProjectPdf) {
       setIsUploadingProject(true)
       try {
-        const uploadResult = await uploadToVercelBlob(selectedProjectPdf)
+        const uploadResult = await uploadFile(selectedProjectPdf)
         pdfFileUrl = uploadResult.url // For backward compatibility
         pdfUrl = uploadResult.url // New cloud URL
       } catch (error) {
@@ -527,7 +515,7 @@ export default function AdminDashboard() {
     }
 
     try {
-      const uploadResult = await uploadToVercelBlob(file)
+      const uploadResult = await uploadFile(file)
       const newResume: Resume = {
         fileName: file.name,
         fileUrl: uploadResult.url,
@@ -569,7 +557,7 @@ export default function AdminDashboard() {
     if (!certificateFormData.title || !certificateFormData.issuer || !selectedCertificate) return
 
     try {
-      const uploadResult = await uploadToVercelBlob(selectedCertificate)
+      const uploadResult = await uploadFile(selectedCertificate)
       const newCertificate: Certificate = {
         id: editingCertificate ? editingCertificate.id : Date.now().toString(),
         fileName: selectedCertificate.name,
