@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, ArrowLeft, User } from "lucide-react"
 import { type BlogPost, listPosts } from "@/lib/posts"
+import CommentSection from "@/components/comment-section"
 
 export default function ReflectionsPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
@@ -160,6 +161,8 @@ export default function ReflectionsPage() {
                   </Link>
                 </div>
               </footer>
+
+              <CommentSection blogPostId={selectedPost.id} />
             </article>
           </motion.div>
         </div>
