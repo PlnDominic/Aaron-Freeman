@@ -79,7 +79,7 @@ export default function AboutSection() {
                   Growing up in Ghana and now practising in Australia has given me a unique perspective on how thoughtful planning can shape stronger, more resilient communities.
                 </p>
                 <p className="text-lg leading-relaxed text-foreground/90 dark:text-foreground/80">
-                  Beyond planning, I'm passionate about mentoring emerging professionals, embracing innovation and using technology to improve planning practice while contributing to community development initiatives.
+                  Beyond planning, I'm passionate about writing, embracing innovation and using technology to improve planning practice while contributing to community development initiatives.
                 </p>
               </div>
             </motion.div>
@@ -104,9 +104,6 @@ export default function AboutSection() {
                     sizes="(max-width: 1024px) 100vw, 28rem"
                   />
                 </div>
-                <figcaption className="mt-3 text-sm text-muted-foreground">
-                  In the studio, reviewing plans in Brisbane.
-                </figcaption>
               </figure>
             </motion.div>
           </div>

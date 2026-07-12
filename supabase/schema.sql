@@ -185,7 +185,7 @@ CREATE POLICY "Admin write access for certificates" ON certificates
     FOR ALL USING (true);
 
 CREATE POLICY "Public write access for page_views" ON page_views
-    FOR INSERT USING (true);
+    FOR INSERT WITH CHECK (true);
 
 CREATE POLICY "Public read access for page_views" ON page_views
     FOR SELECT USING (true);
