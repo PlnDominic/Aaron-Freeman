@@ -126,8 +126,8 @@ export default function ContactSection() {
                 }, {
                   icon: <Phone className="h-5 w-5 lucide-icon" />,
                   title: "Phone (Enquiries)",
-                  value: "+61 412 345 678",
-                  href: "tel:+61412345678",
+                  value: "+61 422 317 496",
+                  href: "tel:+61422317496",
                 }, {
                   icon: <MapPinIcon className="h-5 w-5 lucide-icon" />,
                   title: "Location",
