@@ -5,10 +5,12 @@ import "./globals.css"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
+import { getSiteUrl } from "@/lib/site"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Aaron Freeman - Town Planner & Development Assessment",
   description: "Portfolio of Aaron Freeman, a Statutory Town Planner delivering practical planning advice, development assessment and environmental solutions across Queensland.",
 }
