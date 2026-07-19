@@ -16,7 +16,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     if (!post) return {}
 
     const url = `${getSiteUrl()}/reflections?id=${post.id}`
-    const images = post.image ? [{ url: post.image }] : undefined
+    const images = [{ url: post.image || "/images/aaron.jpg" }]
 
     return {
       title: `${post.title} | Aaron Freeman`,

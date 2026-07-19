@@ -9,10 +9,25 @@ import { getSiteUrl } from "@/lib/site"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
+const title = "Aaron Freeman - Town Planner & Development Assessment"
+const description = "Portfolio of Aaron Freeman, a Statutory Town Planner delivering practical planning advice, development assessment and environmental solutions across Queensland."
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Aaron Freeman - Town Planner & Development Assessment",
-  description: "Portfolio of Aaron Freeman, a Statutory Town Planner delivering practical planning advice, development assessment and environmental solutions across Queensland.",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    images: [{ url: "/images/aaron.jpg" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/images/aaron.jpg"],
+  },
 }
 
 export default function RootLayout({
