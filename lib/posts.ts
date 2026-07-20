@@ -1,4 +1,5 @@
 import { getSupabaseClient } from "@/lib/supabase"
+import { slugify } from "@/lib/slug"
 
 export type ContentBlock =
   | { id: string; type: "heading"; text: string }
@@ -7,6 +8,7 @@ export type ContentBlock =
 
 export interface BlogPost {
   id: string
+  slug: string
   title: string
   excerpt: string
   content: string
@@ -19,6 +21,7 @@ export interface BlogPost {
 
 interface BlogPostRow {
   id: string
+  slug: string
   title: string
   excerpt: string
   content: string
@@ -32,6 +35,7 @@ interface BlogPostRow {
 function rowToPost(row: BlogPostRow): BlogPost {
   return {
     id: row.id,
+    slug: row.slug,
     title: row.title,
     excerpt: row.excerpt,
     content: row.content,
@@ -40,6 +44,23 @@ function rowToPost(row: BlogPostRow): BlogPost {
     readTime: row.read_time,
     tags: row.tags ?? [],
     image: row.image_url ?? undefined,
+  }
+}
+
+async function generateUniqueSlug(
+  supabase: ReturnType<typeof getSupabaseClient>,
+  title: string
+): Promise<string> {
+  const base = slugify(title)
+  let slug = base
+  let attempt = 2
+
+  while (true) {
+    const { data, error } = await supabase.from("blog_posts").select("id").eq("slug", slug).maybeSingle()
+    if (error) throw error
+    if (!data) return slug
+    slug = `${base}-${attempt}`
+    attempt += 1
   }
 }
 
@@ -62,14 +83,24 @@ export async function getPost(id: string): Promise<BlogPost | null> {
   return data ? rowToPost(data as BlogPostRow) : null
 }
 
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const supabase = getSupabaseClient()
+  const { data, error } = await supabase.from("blog_posts").select("*").eq("slug", slug).maybeSingle()
+
+  if (error) throw error
+  return data ? rowToPost(data as BlogPostRow) : null
+}
+
 export async function createPost(
-  post: Omit<BlogPost, "id">
+  post: Omit<BlogPost, "id" | "slug">
 ): Promise<BlogPost> {
   const supabase = getSupabaseClient()
+  const slug = await generateUniqueSlug(supabase, post.title)
   const { data, error } = await supabase
     .from("blog_posts")
     .insert({
       title: post.title,
+      slug,
       excerpt: post.excerpt,
       content: post.content,
       blocks: post.blocks,
@@ -87,7 +118,7 @@ export async function createPost(
 
 export async function updatePost(
   id: string,
-  post: Omit<BlogPost, "id">
+  post: Omit<BlogPost, "id" | "slug">
 ): Promise<BlogPost> {
   const supabase = getSupabaseClient()
   const { data, error } = await supabase
