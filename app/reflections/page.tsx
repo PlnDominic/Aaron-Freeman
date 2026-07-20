@@ -1,49 +1,27 @@
 import type { Metadata } from "next"
+import { redirect } from "next/navigation"
 import { getPost } from "@/lib/posts"
-import { getSiteUrl } from "@/lib/site"
-import ReflectionsPageClient from "@/components/reflections-page-client"
+import ReflectionsListClient from "@/components/reflections-list-client"
 
 type Props = {
   searchParams: Promise<{ id?: string }>
 }
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const { id } = await searchParams
-  if (!id) return {}
-
-  try {
-    const post = await getPost(id)
-    if (!post) return {}
-
-    const url = `${getSiteUrl()}/reflections?id=${post.id}`
-    const images = [{ url: post.image || "/images/aaron.jpg" }]
-
-    return {
-      title: `${post.title} | Aaron Freeman`,
-      description: post.excerpt,
-      alternates: { canonical: url },
-      openGraph: {
-        title: post.title,
-        description: post.excerpt,
-        url,
-        type: "article",
-        publishedTime: post.date,
-        authors: ["Aaron Freeman"],
-        images,
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: post.title,
-        description: post.excerpt,
-        images,
-      },
-    }
-  } catch (error) {
-    console.error("Error generating reflection metadata:", error)
-    return {}
-  }
+export const metadata: Metadata = {
+  title: "Reflections & Insights | Aaron Freeman",
+  description:
+    "Reflections on planning practice, professional growth, innovation and the future of planning.",
 }
 
-export default function ReflectionsPage() {
-  return <ReflectionsPageClient />
+export default async function ReflectionsPage({ searchParams }: Props) {
+  const { id } = await searchParams
+
+  // Legacy links used ?id=<uuid>. Redirect them to the new slug-based URL
+  // so old shared/indexed links keep working.
+  if (id) {
+    const post = await getPost(id).catch(() => null)
+    if (post) redirect(`/reflections/${post.slug}`)
+  }
+
+  return <ReflectionsListClient />
 }

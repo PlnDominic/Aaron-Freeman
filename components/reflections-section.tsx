@@ -96,7 +96,7 @@ export default function ReflectionsSection() {
                     ))}
                   </div>
                   
-                  <Link href={`/reflections?id=${post.id}`}>
+                  <Link href={`/reflections/${post.slug}`}>
                     <Button variant="ghost" className="group-hover:text-primary p-0 h-auto">
                       Read More
                       <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
